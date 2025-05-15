@@ -11,6 +11,9 @@ public enum ErrorCode {
     MISSING_REQUIRED_HEADER(400, HttpStatus.BAD_REQUEST, "필수 헤더가 누락되었습니다."),
     MISSING_REQUIRED_PARAMETER(400, HttpStatus.BAD_REQUEST, "필수 파라미터가 누락되었습니다."),
 
+    DUPLICATION_USER_ID(400, HttpStatus.BAD_REQUEST, "중복된 아이디입니다."),
+    DUPLICATION_USER_NICKNAME(400, HttpStatus.BAD_REQUEST, "중복된 닉네임입니다."),
+
     NOT_FOUND_END_POINT(404, HttpStatus.NOT_FOUND, "엔드포인트를 찾을 수 없습니다."),
 
     METHOD_NOT_ALLOWED(40500, HttpStatus.METHOD_NOT_ALLOWED, "지원하지 않는 메소드입니다."),
