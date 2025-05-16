@@ -1,9 +1,7 @@
 package com.ssafy.meongnyang.api.board.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.ssafy.meongnyang.api.board.dto.BoardCreateRequest;
 
-@Service
-@RequiredArgsConstructor
-public class BoardService {
+public interface BoardService {
+    void createBoard(BoardCreateRequest boardCreateRequest);
 }
