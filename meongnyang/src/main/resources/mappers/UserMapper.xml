@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<mapper namespace = "com.ssafy.meongnyang.api.user.repository.UserRepository">
-    <insert id="insertUser" parameterType="User">
-        INSERT INTO user(id, name, nickname, username,password,phonenumber,email)
-        VALUES (#{id}, #{name}, #{nickname},#{username},#{password},#{phonenumber},#{email})
-    </insert>
-</mapper>
