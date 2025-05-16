@@ -1,21 +1,20 @@
 package com.ssafy.meongnyang.api.user.repository;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
-
 import com.ssafy.meongnyang.api.user.domain.User;
+import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserRepository {
-    // 회원가입
-    void insertUser(User user);
-    // 내 정보 보기
-    // 내 정보 수정
-    // 비밀 번호 변경
-    // 아이디 중복 확인
-    boolean existsById(String username);
-    // 닉네임 중복 확인
-    boolean existsByNickName(String nickName);
 
+    // 회원 저장
+    void insertUser(User user);
+
+    // username(아이디)로 사용자 조회 (로그인용)
+    User findByUsername(String username);
+
+    // username(아이디) 중복 확인
+    boolean existsByUsername(String username);
+
+    // nickname 중복 확인
+    boolean existsByNickname(String nickname);
 }

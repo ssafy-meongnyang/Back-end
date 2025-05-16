@@ -8,10 +8,10 @@ import lombok.Setter;
 public class SignUpRequest {
 // jakarta랑 hibernate 의존성 확인하기
     private String name;
-    private String nickname;
     private String username;
-    private String phonenumber;
     private String password;
+    private String nickname;
+    private String phonenumber;
     private String email;
 
 }

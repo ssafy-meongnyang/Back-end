@@ -17,29 +17,43 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void register(SignUpRequest userdto) {
-        // 1. 중복확인
-        // 아이디 중복확인
-        if(userRepository.existsById(userdto.getUsername())) {
+    public void register(SignUpRequest dto) {
+
+        // 1. 아이디 중복 확인
+        if (userRepository.existsByUsername(dto.getUsername())) {
             throw new CustomException(ErrorCode.DUPLICATION_USER_ID);
         }
-        // 닉네임 중복확인
-        if(userRepository.existsByNickName(userdto.getNickname())) {
+
+        // 2. 닉네임 중복 확인
+        if (userRepository.existsByNickname(dto.getNickname())) {
             throw new CustomException(ErrorCode.DUPLICATION_USER_NICKNAME);
         }
-        // 2. 비밀번호 암호화
-        String encodedPassword = passwordEncoder.encode(userdto.getPassword());
-        userdto.setPassword(encodedPassword);
 
-        // 3. 엔티티 변환
+        // 3. 비밀번호 암호화
+        String encodedPassword = passwordEncoder.encode(dto.getPassword());
+
+        // 4. 엔티티 변환
         User user = User.builder()
-                .username(userdto.getUsername())
-                .nickname(userdto.getNickname())
-                .email(userdto.getEmail())
+                .username(dto.getUsername())
                 .password(encodedPassword)
+                .name(dto.getName())
+                .nickname(dto.getNickname())
+                .email(dto.getEmail())
+                .phonenumber(dto.getPhonenumber())
+                .role("USER")
                 .build();
-        // 4. 저장
+
+        // 5. 저장
         userRepository.insertUser(user);
+    }
+    @Override
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    @Override
+    public boolean existsByNickname(String nickname) {
+        return userRepository.existsByNickname(nickname);
     }
 
 }
