@@ -9,12 +9,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class User {
-// 아이디는 db에서 auto increment 되는건지? 아니면 여기에서 늘려주는건지?
     private Long id;
     private String name; // 이름
     private String username; // 아이디
@@ -24,5 +22,24 @@ public class User {
     private String email;
     private LocalDateTime createdAt;
     private String role;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
 }

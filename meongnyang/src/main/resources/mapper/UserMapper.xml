@@ -17,8 +17,8 @@
         SELECT EXISTS(SELECT 1 FROM users WHERE nickname = #{nickname})
     </select>
 
-        <select id="findByUsername" parameterType="String" resultType="com.ssafy.meongnyang.api.user.domain.User">
-            SELECT * FROM users WHERE username = #{username}
-        </select>
+    <select id="findByUsername" parameterType="String" resultType="com.ssafy.meongnyang.api.user.domain.User">
+        SELECT * FROM users WHERE username = #{username}
+    </select>
 
 </mapper>

@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
 
         // 1. 아이디 중복 확인
         if (userRepository.existsByUsername(dto.getUsername())) {
-            throw new CustomException(ErrorCode.DUPLICATION_USER_ID);
+            throw new CustomException(ErrorCode.DUPLICATION_USER_USERNAME);
         }
 
         // 2. 닉네임 중복 확인
