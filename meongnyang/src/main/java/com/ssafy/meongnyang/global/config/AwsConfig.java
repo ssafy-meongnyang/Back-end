@@ -9,16 +9,16 @@ import software.amazon.awssdk.services.s3.S3Client;
 
 //@Configuration
 public class AwsConfig {
-    private static final String AWS_ACCESS_KEY_ID = "aws.accessKeyId";
-    private static final String AWS_SECRET_KEY = "aws.secretKey";
+    private static final String AWS_ACCESS_KEY = "aws.accessKeyId";
+    private static final String AWS_SECRET_KEY = "aws.secretAccessKey";
 
     private final String accessKey;
     private final String secretKey;
     private final String region;
 
-    public AwsConfig(@Value("${aws-property.access-key}") String accessKey,
-                     @Value("${aws-property.secret-key}") String secretKey,
-                     @Value("${aws-property.aws-region}") String region) {
+    public AwsConfig(@Value("${aws.accessKeyId}") String accessKey,
+                     @Value("${aws.secretAccessKey}") String secretKey,
+                     @Value("${aws.region}") String region) {
         this.accessKey = accessKey;
         this.secretKey = secretKey;
         this.region = region;
@@ -26,7 +26,7 @@ public class AwsConfig {
 
     @Bean
     public SystemPropertyCredentialsProvider systemPropertyCredentialsProvider() {
-        System.setProperty(AWS_ACCESS_KEY_ID, accessKey);
+        System.setProperty(AWS_ACCESS_KEY, accessKey);
         System.setProperty(AWS_SECRET_KEY, secretKey);
         return SystemPropertyCredentialsProvider.create();
     }
