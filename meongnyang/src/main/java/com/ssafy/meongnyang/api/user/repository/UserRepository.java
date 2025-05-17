@@ -5,16 +5,12 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserRepository {
+    // 회원 가입
+    void insertUser(User user); // 회원 저장
+    boolean existsByUsername(String username); // username(아이디) 중복 확인
+    boolean existsByNickname(String nickname); // nickname 중복 확인
 
-    // 회원 저장
-    void insertUser(User user);
+    // 로그인
+    User findByUsername(String username); // username(아이디)로 사용자 조회
 
-    // username(아이디)로 사용자 조회 (로그인용)
-    User findByUsername(String username);
-
-    // username(아이디) 중복 확인
-    boolean existsByUsername(String username);
-
-    // nickname 중복 확인
-    boolean existsByNickname(String nickname);
 }

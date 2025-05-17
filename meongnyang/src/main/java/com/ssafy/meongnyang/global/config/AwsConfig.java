@@ -7,7 +7,7 @@ import software.amazon.awssdk.auth.credentials.SystemPropertyCredentialsProvider
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 
-@Configuration
+//@Configuration
 public class AwsConfig {
     private static final String AWS_ACCESS_KEY_ID = "aws.accessKeyId";
     private static final String AWS_SECRET_KEY = "aws.secretKey";
