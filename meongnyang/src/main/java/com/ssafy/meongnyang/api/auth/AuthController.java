@@ -21,7 +21,7 @@ public class AuthController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponseDto<LoginResponse>>  login(@RequestBody LoginRequest request) {
+    public ApiResponseDto<LoginResponse>  login(@RequestBody LoginRequest request) {
         // 1. 사용자 아이디와 비밀번호로 인증 시도
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken( //인증을 위한 스프링 시큐리티 표준 토큰
@@ -39,8 +39,6 @@ public class AuthController {
         // 3. 응답 객체 생성 (accessToken 담은 DTO)
         LoginResponse loginResponse = new LoginResponse(token);
         // 커스텀 ResponseDto 형태로 응답
-        return ResponseEntity
-                .status(SuccessCode.LOGIN_SUCCESS.getHttpStatus())
-                .body(ApiResponseDto.success(SuccessCode.LOGIN_SUCCESS, loginResponse));
+        return ApiResponseDto.success(SuccessCode.LOGIN_SUCCESS, loginResponse);
     }
 }
