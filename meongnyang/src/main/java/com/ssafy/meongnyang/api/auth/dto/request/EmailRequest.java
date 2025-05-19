@@ -1,4 +1,4 @@
-package com.ssafy.meongnyang.api.auth.dto;
+package com.ssafy.meongnyang.api.auth.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

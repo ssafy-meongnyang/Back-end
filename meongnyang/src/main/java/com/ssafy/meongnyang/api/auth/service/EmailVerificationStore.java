@@ -1,4 +1,4 @@
-package com.ssafy.meongnyang.api.auth;
+package com.ssafy.meongnyang.api.auth.service;
 
 import org.springframework.stereotype.Component;
 
