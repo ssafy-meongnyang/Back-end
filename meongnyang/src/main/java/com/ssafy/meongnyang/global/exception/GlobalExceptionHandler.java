@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     public ResponseEntity<ApiResponseDto<?>> handleValidationException(MethodArgumentNotValidException ex) {
         // 예외 메시지가 없을 경우 대비
-        String message = "요청 값이 유효하지 않습니다.";
+        String message = "잘못된 요청입니다.";
         message = ex.getBindingResult()
                 .getAllErrors()
                 .get(0)
@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ApiResponseDto.fail(ErrorCode.BAD_REQUEST, message));
     }
-//
+
 //    @ExceptionHandler(value = {MethodArgumentNotValidException.class})
 //    public ResponseEntity<ApiResponseDto<?>> handlerMethodArgumentNotValidException(Exception e) {
 //        log.error(
