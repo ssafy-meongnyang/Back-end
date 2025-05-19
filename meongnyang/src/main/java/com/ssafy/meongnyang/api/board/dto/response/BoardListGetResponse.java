@@ -1,4 +1,4 @@
-package com.ssafy.meongnyang.api.board.dto;
+package com.ssafy.meongnyang.api.board.dto.response;
 
 import java.time.LocalDateTime;
 import lombok.Builder;

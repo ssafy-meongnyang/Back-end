@@ -1,6 +1,5 @@
-package com.ssafy.meongnyang.api.board.dto;
+package com.ssafy.meongnyang.api.board.dto.request;
 
-import com.ssafy.meongnyang.api.board.domain.Category;
 import org.springframework.web.multipart.MultipartFile;
 
 public record BoardCreateRequest(

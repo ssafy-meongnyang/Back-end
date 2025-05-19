@@ -1,15 +1,13 @@
 package com.ssafy.meongnyang.api.board.service;
 
 import com.ssafy.meongnyang.api.board.domain.Board;
-import com.ssafy.meongnyang.api.board.dto.BoardCreateRequest;
-import com.ssafy.meongnyang.api.board.dto.BoardListGetResponse;
+import com.ssafy.meongnyang.api.board.dto.request.BoardCreateRequest;
+import com.ssafy.meongnyang.api.board.dto.response.BoardGetResponse;
+import com.ssafy.meongnyang.api.board.dto.response.BoardListGetResponse;
 import com.ssafy.meongnyang.api.board.repository.BoardRepository;
-import com.ssafy.meongnyang.api.user.domain.User;
 import com.ssafy.meongnyang.global.external.S3Service;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +37,9 @@ public class BoardServiceImpl implements BoardService {
 
     public List<BoardListGetResponse> getBoardList() {
         return boardRepository.getBoardListWithUser();
+    }
+
+    public BoardGetResponse getBoardById(int boardId) {
+        return boardRepository.getBoardById(boardId);
     }
 }
