@@ -44,5 +44,16 @@ public record ApiResponseDto<T>(
                 .data(null)
                 .build();
     }
+
+    // 사용자 정의 메시지를 넣을 수 있는 fail 메서드
+    public static <T> ApiResponseDto<T> fail(final ErrorCode errorCode, final String customMessage) {
+        return ApiResponseDto.<T>builder()
+                .httpStatus(errorCode.getHttpStatus())
+                .status(errorCode.getCode())
+                .message(customMessage) // 여기에 전달된 메시지를 덮어씌움
+                .data(null)
+                .build();
+    }
+
 }
 

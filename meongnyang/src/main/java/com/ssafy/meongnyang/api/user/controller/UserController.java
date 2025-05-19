@@ -4,6 +4,7 @@ import com.ssafy.meongnyang.api.user.dto.SignUpRequest;
 import com.ssafy.meongnyang.api.user.service.UserService;
 import com.ssafy.meongnyang.global.response.ApiResponseDto;
 import com.ssafy.meongnyang.global.response.enums.SuccessCode;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class UserController {
 
     // 회원가입 API
     @PostMapping("/register")
-    public ApiResponseDto<?> register(@RequestBody SignUpRequest signUpRequest) {
+    public ApiResponseDto<?> register(@RequestBody @Valid SignUpRequest signUpRequest) {
         userService.register(signUpRequest);
         return ApiResponseDto.success(SuccessCode.REGISTER_SUCCESS);
     }

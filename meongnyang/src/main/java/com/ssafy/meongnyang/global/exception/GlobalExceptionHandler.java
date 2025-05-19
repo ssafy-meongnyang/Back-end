@@ -22,14 +22,28 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @RequiredArgsConstructor
 public class GlobalExceptionHandler {
 
+    // 커스텀 메세지로 반환
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
-    public ResponseEntity<ApiResponseDto<?>> handlerMethodArgumentNotValidException(Exception e) {
-        log.error(
-                "handlerMethodArgumentNotValidException() in GlobalExceptionHandler throw MethodArgumentNotValidException : {}",
-                e.getMessage());
+    public ResponseEntity<ApiResponseDto<?>> handleValidationException(MethodArgumentNotValidException ex) {
+        // 예외 메시지가 없을 경우 대비
+        String message = "잘못된 요청입니다.";
+        message = ex.getBindingResult()
+                .getAllErrors()
+                .get(0)
+                .getDefaultMessage();
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ApiResponseDto.fail(ErrorCode.BAD_REQUEST));
+                .body(ApiResponseDto.fail(ErrorCode.BAD_REQUEST, message));
     }
+
+//    @ExceptionHandler(value = {MethodArgumentNotValidException.class})
+//    public ResponseEntity<ApiResponseDto<?>> handlerMethodArgumentNotValidException(Exception e) {
+//        log.error(
+//                "handlerMethodArgumentNotValidException() in GlobalExceptionHandler throw MethodArgumentNotValidException : {}",
+//                e.getMessage());
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+//                .body(ApiResponseDto.fail(ErrorCode.BAD_REQUEST));
+//    }
 
     @ExceptionHandler(value = {MethodArgumentTypeMismatchException.class})
     public ResponseEntity<ApiResponseDto<?>> handlerMethodArgumentTypeMismatchException(Exception e) {
