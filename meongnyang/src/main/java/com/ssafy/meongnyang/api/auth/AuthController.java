@@ -5,6 +5,8 @@ import com.ssafy.meongnyang.api.auth.dto.LoginResponse;
 import com.ssafy.meongnyang.global.jwt.JwtTokenProvider;
 import com.ssafy.meongnyang.global.response.ApiResponseDto;
 import com.ssafy.meongnyang.global.response.enums.SuccessCode;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -40,5 +42,12 @@ public class AuthController {
         LoginResponse loginResponse = new LoginResponse(token);
         // 커스텀 ResponseDto 형태로 응답
         return ApiResponseDto.success(SuccessCode.LOGIN_SUCCESS, loginResponse);
+    }
+
+    // 클라이언트에서 JWT 삭제하는 방식
+    @PostMapping("/logout")
+    public ApiResponseDto<?> logout(HttpServletRequest request) {
+        // 실제로는 클라이언트가 Authorization 헤더에서 토큰을 제거해야 함
+        return ApiResponseDto.success(SuccessCode.LOGOUT_SUCCESS);
     }
 }
