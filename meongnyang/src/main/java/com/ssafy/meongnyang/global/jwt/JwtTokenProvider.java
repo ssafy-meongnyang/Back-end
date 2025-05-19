@@ -1,6 +1,6 @@
 package com.ssafy.meongnyang.global.jwt;
 
-import com.ssafy.meongnyang.api.user.service.CustomUserDetailsService;
+import com.ssafy.meongnyang.api.auth.security.CustomUserDetailsService;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
