@@ -14,6 +14,7 @@ public enum SuccessCode {
     CHECK_NICKNAME_SUCCESS(200, HttpStatus.OK, "닉네임 중복 확인 성공"),
     BOARD_LIST_GET_SUCCESS(200, HttpStatus.OK, "게시물 전체 리스트 조회 성공"),
     LOGOUT_SUCCESS(200,HttpStatus.OK , "로그아웃이 완료되었습니다."),
+    BOARD_GET_SUCCESS(200, HttpStatus.OK, "게시물 상세 조회 성공"),
 
     //201 CREATED
     BOARD_CREATE_SUCCESS(201, HttpStatus.CREATED, "게시물 생성 성공"),

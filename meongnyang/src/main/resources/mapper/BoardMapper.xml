@@ -8,7 +8,7 @@
         VALUES (#{category}, #{userId}, #{title}, #{content}, #{imageUrl});
     </insert>
 
-    <select id="getBoardListWithUser" resultType="com.ssafy.meongnyang.api.board.dto.BoardListGetResponse">
+    <select id="getBoardListWithUser" resultType="com.ssafy.meongnyang.api.board.dto.response.BoardListGetResponse">
         SELECT
         b.category,
         b.title,
@@ -18,4 +18,16 @@
         JOIN user u ON b.user_id = u.id
     </select>
 
+    <select id="getBoardById" resultType="com.ssafy.meongnyang.api.board.dto.response.BoardGetResponse">
+        SELECT
+        b.category,
+        b.title,
+        u.nickname AS nickname,
+        u.image_url AS profileImageUrl,
+        DATE_FORMAT(b.created_at, '%Y-%m-%d') AS date,
+        b.content,
+        b.image_url
+        FROM board b
+        JOIN user u ON b.user_id = u.id
+    </select>
 </mapper>

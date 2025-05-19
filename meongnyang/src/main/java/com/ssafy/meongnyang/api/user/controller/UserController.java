@@ -5,7 +5,6 @@ import com.ssafy.meongnyang.api.user.service.UserService;
 import com.ssafy.meongnyang.global.response.ApiResponseDto;
 import com.ssafy.meongnyang.global.response.enums.SuccessCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
