@@ -5,6 +5,7 @@ import com.ssafy.meongnyang.api.board.service.BoardServiceImpl;
 import com.ssafy.meongnyang.global.response.ApiResponseDto;
 import com.ssafy.meongnyang.global.response.enums.SuccessCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,5 +23,10 @@ public class BoardController {
     public ApiResponseDto createBoard(@ModelAttribute BoardCreateRequest boardCreateRequest) {
         boardServiceImpl.createBoard(boardCreateRequest);
         return ApiResponseDto.success(SuccessCode.BOARD_CREATE_SUCCESS);
+    }
+
+    @GetMapping("/board/list")
+    public ApiResponseDto getBoardList() {
+        return ApiResponseDto.success(SuccessCode.BOARD_LIST_GET_SUCCESS, boardServiceImpl.getBoardList());
     }
 }

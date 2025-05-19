@@ -7,4 +7,15 @@
         INSERT INTO board (category, user_id, title, content, image_url)
         VALUES (#{category}, #{userId}, #{title}, #{content}, #{imageUrl});
     </insert>
+
+    <select id="getBoardListWithUser" resultType="com.ssafy.meongnyang.api.board.dto.BoardListGetResponse">
+        SELECT
+        b.category,
+        b.title,
+        u.nickname AS username,
+        b.created_at
+        FROM board b
+        JOIN user u ON b.user_id = u.id
+    </select>
+
 </mapper>
