@@ -50,4 +50,6 @@ public class AuthController {
         // 실제로는 클라이언트가 Authorization 헤더에서 토큰을 제거해야 함
         return ApiResponseDto.success(SuccessCode.LOGOUT_SUCCESS);
     }
+
+
 }
