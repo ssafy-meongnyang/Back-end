@@ -1,6 +1,7 @@
 package com.ssafy.meongnyang.api.user.service;
 
 import com.ssafy.meongnyang.api.user.domain.User;
+import com.ssafy.meongnyang.api.user.dto.request.PasswordRequest;
 import com.ssafy.meongnyang.api.user.dto.request.SignUpRequest;
 import com.ssafy.meongnyang.api.user.dto.response.UserResponse;
 import com.ssafy.meongnyang.api.user.repository.UserRepository;
@@ -11,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -66,6 +66,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse getMyInfo(String username) {
         return userRepository.selectUserByUsername(username);
+    }
+
+    @Override
+    public void changePassword(String username, PasswordRequest passwordRequest) {
+        // 1. 새 비밀번호와 확인 비밀번호가 일치하는지 비교
+        if(!passwordRequest.newPassword().equals(passwordRequest.confirmPassword())) {
+            throw new CustomException(ErrorCode.PASSWORD_CONFIRM_NOT_MATCH);
+        }
+        // 2. 입력한 비밀번호가 현재 비밀번호와 일치하는지 검증
+        User user = userRepository.findByUsername(username);
+        if (!passwordEncoder.matches(passwordRequest.currentPassword(), user.getPassword())) {
+            throw new CustomException(ErrorCode.INVALID_PASSWORD);
+        }
+        // 3. 비밀번호 암호화
+        String encodedNewPassword = passwordEncoder.encode(passwordRequest.newPassword());
+        
+        // 비밀번호 업데이트
+        int result = userRepository.updatePassword(username, encodedNewPassword);
     }
 
 }

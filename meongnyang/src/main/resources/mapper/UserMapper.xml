@@ -25,4 +25,10 @@
         SELECT username, nickname, email, phonenumber, password_updated_at
         FROM users WHERE username= #{username}
     </select>
+
+    <update id="updatePassword" parameterType="map">
+        UPDATE users
+        SET password = #{password},password_updated_at = NOW()
+        WHERE username = #{username}
+    </update>
 </mapper>
