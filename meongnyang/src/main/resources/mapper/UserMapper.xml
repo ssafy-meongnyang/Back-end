@@ -22,6 +22,7 @@
     </select>
 
     <select id="selectUserByUsername" parameterType="String" resultType="com.ssafy.meongnyang.api.user.dto.response.UserResponse">
-        SELECT * FROM users WHERE username= #{username}
+        SELECT username, nickname, email, phonenumber, password_updated_at
+        FROM users WHERE username= #{username}
     </select>
 </mapper>
