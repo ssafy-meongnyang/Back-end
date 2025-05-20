@@ -1,7 +1,8 @@
 package com.ssafy.meongnyang.api.user.controller;
 
 import com.ssafy.meongnyang.api.auth.security.CustomUserDetails;
-import com.ssafy.meongnyang.api.user.dto.SignUpRequest;
+import com.ssafy.meongnyang.api.user.dto.request.SignUpRequest;
+import com.ssafy.meongnyang.api.user.dto.response.UserResponse;
 import com.ssafy.meongnyang.api.user.service.UserService;
 import com.ssafy.meongnyang.global.response.ApiResponseDto;
 import com.ssafy.meongnyang.global.response.enums.SuccessCode;
@@ -40,8 +41,10 @@ public class UserController {
     }
 
     // 내 정보 보기 API
-//    @GetMapping("/me")
-//    public ApiResponseDto<?> getMyInfo(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
-//
-//    }
+    @GetMapping("/me")
+    public ApiResponseDto<UserResponse> getMyInfo(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        String username = customUserDetails.getUsername();
+        UserResponse userResponse= userService.getMyInfo(username);
+        return ApiResponseDto.success(SuccessCode.USER_GET_INFO_SUCCESS, userResponse);
+    }
 }

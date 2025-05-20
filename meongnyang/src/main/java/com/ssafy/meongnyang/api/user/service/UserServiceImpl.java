@@ -1,7 +1,8 @@
 package com.ssafy.meongnyang.api.user.service;
 
 import com.ssafy.meongnyang.api.user.domain.User;
-import com.ssafy.meongnyang.api.user.dto.SignUpRequest;
+import com.ssafy.meongnyang.api.user.dto.request.SignUpRequest;
+import com.ssafy.meongnyang.api.user.dto.response.UserResponse;
 import com.ssafy.meongnyang.api.user.repository.UserRepository;
 import com.ssafy.meongnyang.global.exception.CustomException;
 import com.ssafy.meongnyang.global.response.enums.ErrorCode;
@@ -59,6 +60,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean existsByNickname(String nickname) {
         return userRepository.existsByNickname(nickname);
+    }
+
+    @Override
+    public UserResponse getMyInfo(String username) {
+        return userRepository.selectUserByUsername(username);
     }
 
 }

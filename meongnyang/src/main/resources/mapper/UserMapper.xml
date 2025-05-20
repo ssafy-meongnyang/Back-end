@@ -21,4 +21,7 @@
         SELECT * FROM users WHERE username = #{username}
     </select>
 
+    <select id="selectUserByUsername" parameterType="String" resultType="com.ssafy.meongnyang.api.user.dto.response.UserResponse">
+        SELECT * FROM users WHERE username= #{username}
+    </select>
 </mapper>
