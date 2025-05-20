@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService {
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
 
         // 4. 엔티티 변환
+        String imageUrl = "http://localhost:8080/images/default-profile.png";
         User user = User.builder()
                 .username(dto.getUsername())
                 .password(encodedPassword)
@@ -40,7 +41,8 @@ public class UserServiceImpl implements UserService {
                 .nickname(dto.getNickname())
                 .email(dto.getEmail())
                 .phonenumber(dto.getPhonenumber())
-                .role("USER")
+                .role("USER")              // 디폴트 역할
+                .profileImageUrl(imageUrl) // 디폴트 이미지
                 .build();
 
         // 5. 저장

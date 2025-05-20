@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Setter
-public class User extends BaseTimeEntity {
+public class User{
     private Long id;
     private String name; // 이름
     private String username; // 아이디
