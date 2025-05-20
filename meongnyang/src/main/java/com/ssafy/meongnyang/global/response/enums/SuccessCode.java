@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 public enum SuccessCode {
 
     //200 OK
+    EMAIL_SENT(200,HttpStatus.OK,"인증 코드가 전송되었습니다."),
+    EMAIL_VERIFIED(200,HttpStatus.OK,"이메일 인증이 완료되었습니다."),
     LOGIN_SUCCESS(200, HttpStatus.OK, "로그인 성공"),
     CHECK_USERNAME_SUCCESS(200, HttpStatus.OK, "아이디 중복 확인 성공"),
     CHECK_NICKNAME_SUCCESS(200, HttpStatus.OK, "닉네임 중복 확인 성공"),

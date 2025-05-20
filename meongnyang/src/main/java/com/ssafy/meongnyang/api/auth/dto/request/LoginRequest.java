@@ -1,4 +1,4 @@
-package com.ssafy.meongnyang.api.auth.dto;
+package com.ssafy.meongnyang.api.auth.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;

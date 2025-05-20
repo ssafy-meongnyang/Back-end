@@ -1,6 +1,5 @@
-package com.ssafy.meongnyang.api.user.service;
+package com.ssafy.meongnyang.api.auth.security;
 
-import com.ssafy.meongnyang.api.auth.CustomUserDetails;
 import com.ssafy.meongnyang.api.user.domain.User;
 import com.ssafy.meongnyang.api.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
