@@ -1,6 +1,7 @@
 package com.ssafy.meongnyang.api.user.repository;
 
 import com.ssafy.meongnyang.api.user.domain.User;
+import com.ssafy.meongnyang.api.user.dto.response.UserResponse;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -11,6 +12,9 @@ public interface UserRepository {
     boolean existsByNickname(String nickname); // nickname 중복 확인
 
     // 로그인
-    User findByUsername(String username); // username(아이디)로 사용자 조회
+    User findByUsername(String username);
+
+    // username(아이디)로 사용자 정보 조회
+    UserResponse selectUserByUsername(String username);
 
 }

@@ -1,13 +1,17 @@
 package com.ssafy.meongnyang.api.user.service;
 
 import com.ssafy.meongnyang.api.user.domain.User;
-import com.ssafy.meongnyang.api.user.dto.SignUpRequest;
+import com.ssafy.meongnyang.api.user.dto.request.SignUpRequest;
+import com.ssafy.meongnyang.api.user.dto.response.UserResponse;
 import com.ssafy.meongnyang.api.user.repository.UserRepository;
 import com.ssafy.meongnyang.global.exception.CustomException;
 import com.ssafy.meongnyang.global.response.enums.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +47,7 @@ public class UserServiceImpl implements UserService {
                 .phonenumber(dto.getPhonenumber())
                 .role("USER")              // 디폴트 역할
                 .profileImageUrl(imageUrl) // 디폴트 이미지
+                .passwordUpdatedAt(LocalDate.now()) // 디폴트 패스워드 업데이트 시간
                 .build();
 
         // 5. 저장
@@ -56,6 +61,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean existsByNickname(String nickname) {
         return userRepository.existsByNickname(nickname);
+    }
+
+    @Override
+    public UserResponse getMyInfo(String username) {
+        return userRepository.selectUserByUsername(username);
     }
 
 }

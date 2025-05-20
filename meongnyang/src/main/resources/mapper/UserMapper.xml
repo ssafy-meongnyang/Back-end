@@ -5,8 +5,8 @@
 <mapper namespace="com.ssafy.meongnyang.api.user.repository.UserRepository">
 
     <insert id="insertUser" parameterType="com.ssafy.meongnyang.api.user.domain.User">
-        INSERT INTO users (name, nickname, username, password, phonenumber, email, role, profile_image_url)
-        VALUES (#{name}, #{nickname}, #{username}, #{password}, #{phonenumber}, #{email}, #{role}, #{profileImageUrl})
+        INSERT INTO users (name, nickname, username, password, phonenumber, email, role, profile_image_url, password_updated_at)
+        VALUES (#{name}, #{nickname}, #{username}, #{password}, #{phonenumber}, #{email}, #{role}, #{profileImageUrl}, #{passwordUpdatedAt})
     </insert>
 
     <select id="existsByUsername" parameterType="String" resultType="boolean">
@@ -21,4 +21,8 @@
         SELECT * FROM users WHERE username = #{username}
     </select>
 
+    <select id="selectUserByUsername" parameterType="String" resultType="com.ssafy.meongnyang.api.user.dto.response.UserResponse">
+        SELECT username, nickname, email, phonenumber, password_updated_at
+        FROM users WHERE username= #{username}
+    </select>
 </mapper>
