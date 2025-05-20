@@ -1,11 +1,13 @@
 package com.ssafy.meongnyang.api.user.controller;
 
+import com.ssafy.meongnyang.api.auth.security.CustomUserDetails;
 import com.ssafy.meongnyang.api.user.dto.SignUpRequest;
 import com.ssafy.meongnyang.api.user.service.UserService;
 import com.ssafy.meongnyang.global.response.ApiResponseDto;
 import com.ssafy.meongnyang.global.response.enums.SuccessCode;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -36,4 +38,10 @@ public class UserController {
         boolean isAvailable = !userService.existsByNickname(nickname);
         return ApiResponseDto.success(SuccessCode.CHECK_NICKNAME_SUCCESS, isAvailable);
     }
+
+    // 내 정보 보기 API
+//    @GetMapping("/me")
+//    public ApiResponseDto<?> getMyInfo(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+//
+//    }
 }

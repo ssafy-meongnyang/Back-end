@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -43,6 +45,7 @@ public class UserServiceImpl implements UserService {
                 .phonenumber(dto.getPhonenumber())
                 .role("USER")              // 디폴트 역할
                 .profileImageUrl(imageUrl) // 디폴트 이미지
+                .passwordUpdatedAt(LocalDateTime.now()) // 디폴트 패스워드 업데이트 시간
                 .build();
 
         // 5. 저장
