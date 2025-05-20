@@ -1,6 +1,6 @@
 package com.ssafy.meongnyang.api.user.domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +23,7 @@ public class User{
     private String email; // 이메일
     private String role; // 역할
     private String profileImageUrl; // 프로필 이미지 
-    private LocalDateTime passwordUpdatedAt; // 비밀번호 업데이트 시간
+    private LocalDate passwordUpdatedAt; // 비밀번호 업데이트 시간
 
 
 
