@@ -2,6 +2,7 @@ package com.ssafy.meongnyang.api.pet.service;
 
 import com.ssafy.meongnyang.api.pet.domain.Pet;
 import com.ssafy.meongnyang.api.pet.dto.request.PetRequest;
+import com.ssafy.meongnyang.api.pet.dto.response.PetDetailResponse;
 import com.ssafy.meongnyang.api.pet.dto.response.PetListResponse;
 import com.ssafy.meongnyang.api.pet.repository.PetRepository;
 import lombok.RequiredArgsConstructor;
@@ -61,5 +62,27 @@ public class PetServiceImpl implements PetService{
                     concerns
             );
         }).toList();
+    }
+
+    @Override
+    public PetDetailResponse getPetDetail(Long petId) {
+        Pet pet = petRepository.findPetById(petId);
+        List<String> allergens = petRepository.findAllergensByPetId(petId);
+        List<String> concerns = petRepository.findHealthConcernsByPetId(petId);
+
+        return new PetDetailResponse(
+                pet.getId(),
+                pet.getName(),
+                pet.getBreed(),
+                pet.getBirthDate(),
+                pet.getGender(),
+                pet.getWeight(),
+                pet.getShape(),
+                pet.getIsAllergic(),
+                pet.getProfileImageUrl(),
+                pet.getIsRepresentative(),
+                allergens,
+                concerns
+        );
     }
 }
