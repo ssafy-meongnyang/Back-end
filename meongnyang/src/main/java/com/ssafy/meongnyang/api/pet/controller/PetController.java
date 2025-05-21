@@ -32,9 +32,15 @@ public class PetController {
 
     // 멍냥이 목록 조회
     @GetMapping("/list")
-    public ApiResponseDto getMyPets(@AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ApiResponseDto<?> getMyPets(@AuthenticationPrincipal CustomUserDetails userDetails) {
         Long userId = userDetails.getUser().getId();
         List<PetListResponse> pets = petService.getPetListByUserId(userId);
         return ApiResponseDto.success(SuccessCode.PET_LIST_GET_SUCCESS, pets);
+    }
+
+    // 멍냥이 상세 조회
+    @GetMapping("/{petId}")
+    public ApiResponseDto<?> getPetDetail(@PathVariable Long petId){
+        return ApiResponseDto.success(SuccessCode.PET_DETAIL_GET_SUCCESS, petService.getPetDetail(petId));
     }
 }

@@ -22,6 +22,7 @@ public enum SuccessCode {
     USER_UPDATE_MY_INFO_SUCCESS(200,HttpStatus.OK,"마이페이지 내 정보 수정 성공"),
     USER_DELETE_SUCCESS(200,HttpStatus.OK,"회원 탈퇴 성공"),
     PET_LIST_GET_SUCCESS(200,HttpStatus.OK,"멍냥이 목록 조회 성공"),
+    PET_DETAIL_GET_SUCCESS(200,HttpStatus.OK,"멍냥이 상세조회 성공"),
     //201 CREATED
     BOARD_CREATE_SUCCESS(201, HttpStatus.CREATED, "게시물 생성 성공"),
     REGISTER_SUCCESS(201, HttpStatus.CREATED, "회원가입이 완료되었습니다."),
