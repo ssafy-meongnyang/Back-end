@@ -68,4 +68,12 @@ public class UserController {
         UserResponse response = userService.updateMyInfo(username,request);
         return ApiResponseDto.success(SuccessCode.USER_UPDATE_MY_INFO_SUCCESS,response);
     }
+
+    // 회원 탈퇴 API
+    @DeleteMapping("/me")
+    public ApiResponseDto<?> deleteMyAccount( @AuthenticationPrincipal CustomUserDetails customUserDetails){
+        String username = customUserDetails.getUsername();
+        userService.deleteMyAccount(username);
+        return ApiResponseDto.success(SuccessCode.USER_DELETE_SUCCESS);
+    }
 }

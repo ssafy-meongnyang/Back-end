@@ -40,4 +40,9 @@
         profile_image_url = #{profileImageUrl}
         WHERE username= #{username}
     </update>
+
+    <delete id="deleteUser" parameterType="string">
+        DELETE FROM users
+        WHERE username = #{username}
+    </delete>
 </mapper>

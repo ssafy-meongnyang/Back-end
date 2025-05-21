@@ -14,4 +14,5 @@ public interface UserService {
     UserResponse getMyInfo(String username);
     void changePassword(String username, PasswordRequest passwordRequest);
     UserResponse updateMyInfo(String username, UserUpdateRequest request);
+    void deleteMyAccount(String username);
 }
