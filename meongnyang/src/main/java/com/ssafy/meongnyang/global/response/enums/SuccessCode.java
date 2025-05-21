@@ -23,7 +23,8 @@ public enum SuccessCode {
     USER_DELETE_SUCCESS(200,HttpStatus.OK,"회원 탈퇴 성공"),
     //201 CREATED
     BOARD_CREATE_SUCCESS(201, HttpStatus.CREATED, "게시물 생성 성공"),
-    REGISTER_SUCCESS(201, HttpStatus.CREATED, "회원가입이 완료되었습니다.")
+    REGISTER_SUCCESS(201, HttpStatus.CREATED, "회원가입이 완료되었습니다."),
+    PET_REGISTER_SUCCESS(201, HttpStatus.CREATED,"멍냥이 등록이 완료되었습니다.")
     ;
 
     private final int code;
