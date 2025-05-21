@@ -14,4 +14,5 @@ public interface PetService {
     List<PetListResponse> getPetListByUserId(Long userId);
     PetDetailResponse getPetDetail(Long petId);
     void updatePetInfo(Long userId, Long petId, PetUpdateRequest petUpdateRequest);
+    void deletePetdata(Long userId, Long petId);
 }

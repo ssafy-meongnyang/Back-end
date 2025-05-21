@@ -56,4 +56,15 @@ public class PetController {
         petService.updatePetInfo(userId, petId ,petUpdateRequest);
         return ApiResponseDto.success(SuccessCode.PET_UPDATE_SUCCESS);
     }
+
+    // 멍냥이 데이터 삭제
+    @DeleteMapping("/{petId}")
+    public ApiResponseDto<?> deletePetdata(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable Long petId
+            ){
+        Long userId = userDetails.getUser().getId();
+        petService.deletePetdata(userId, petId);
+        return ApiResponseDto.success(SuccessCode.PET_DELETE_SUCCESS);
+    }
 }
