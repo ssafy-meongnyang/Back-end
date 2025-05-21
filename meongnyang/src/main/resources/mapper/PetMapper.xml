@@ -74,4 +74,9 @@
     <delete id="deletePetByUserId" parameterType="long">
         DELETE FROM pet WHERE user_id = #{userId}
     </delete>
+
+    <!--  petId로 멍냥 데이터 삭제  -->
+    <delete id="deletePetdata">
+        DELETE FROM pet WHERE id = #{petId} and user_id = #{userId}
+    </delete>
 </mapper>

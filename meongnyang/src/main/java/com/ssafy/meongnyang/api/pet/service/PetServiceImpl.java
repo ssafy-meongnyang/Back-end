@@ -117,4 +117,9 @@ public class PetServiceImpl implements PetService{
             petRepository.insertHealthConcerns(petId, petUpdateRequest.healthConcerns());
         }
     }
+
+    @Override
+    public void deletePetdata(Long userId, Long petId) {
+        petRepository.deletePetdata(userId,petId);
+    }
 }
