@@ -19,5 +19,8 @@ public interface UserRepository {
     UserResponse selectUserByUsername(String username);
     
     // password 변경
-     int updatePassword(@Param("username") String username, @Param("password") String newPassword);
+    int updatePassword(@Param("username") String username, @Param("password") String newPassword);
+    
+    // username으로 사용자 정보 수정
+    int updateUser(User user);
 }

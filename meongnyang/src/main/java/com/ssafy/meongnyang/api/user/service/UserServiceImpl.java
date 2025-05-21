@@ -3,6 +3,7 @@ package com.ssafy.meongnyang.api.user.service;
 import com.ssafy.meongnyang.api.user.domain.User;
 import com.ssafy.meongnyang.api.user.dto.request.PasswordRequest;
 import com.ssafy.meongnyang.api.user.dto.request.SignUpRequest;
+import com.ssafy.meongnyang.api.user.dto.request.UserUpdateRequest;
 import com.ssafy.meongnyang.api.user.dto.response.UserResponse;
 import com.ssafy.meongnyang.api.user.repository.UserRepository;
 import com.ssafy.meongnyang.global.exception.CustomException;
@@ -84,6 +85,33 @@ public class UserServiceImpl implements UserService {
         
         // 비밀번호 업데이트
         int result = userRepository.updatePassword(username, encodedNewPassword);
+    }
+    private static final String DEFAULT_PROFILE_IMAGE_URL = "http://localhost:8080/images/default-profile.png";
+    @Override
+    public UserResponse updateMyInfo(String username, UserUpdateRequest request) {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {throw new CustomException(ErrorCode.USER_NOT_FOUND);}
+
+        user.setNickname(request.nickname());
+        user.setEmail(request.email());
+        user.setPhonenumber(request.phonenumber());
+
+
+        // 프로필 이미지가 null이면 기본 이미지로 설정
+        if (request.profileImageUrl() == null || request.profileImageUrl().isBlank()) {
+            user.setProfileImageUrl(DEFAULT_PROFILE_IMAGE_URL);
+        } else {
+            user.setProfileImageUrl(request.profileImageUrl());
+        }
+
+        userRepository.updateUser(user);
+        return new UserResponse(
+                user.getNickname(),
+                user.getEmail(),
+                user.getPhonenumber(),
+                user.getProfileImageUrl(),
+                user.getPasswordUpdatedAt()
+        );
     }
 
 }

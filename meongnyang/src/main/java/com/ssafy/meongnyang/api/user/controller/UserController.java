@@ -3,6 +3,7 @@ package com.ssafy.meongnyang.api.user.controller;
 import com.ssafy.meongnyang.api.auth.security.CustomUserDetails;
 import com.ssafy.meongnyang.api.user.dto.request.PasswordRequest;
 import com.ssafy.meongnyang.api.user.dto.request.SignUpRequest;
+import com.ssafy.meongnyang.api.user.dto.request.UserUpdateRequest;
 import com.ssafy.meongnyang.api.user.dto.response.UserResponse;
 import com.ssafy.meongnyang.api.user.service.UserService;
 import com.ssafy.meongnyang.global.response.ApiResponseDto;
@@ -55,5 +56,16 @@ public class UserController {
         String username = customUserDetails.getUsername();
         userService.changePassword(username, passwordRequest);
         return ApiResponseDto.success(SuccessCode.USER_UPDATE_PASSWORD_SUCCESS);
+    }
+
+    // 내정보 수정하기 API
+    @PatchMapping("/me")
+    public ApiResponseDto<?> updateMyInfo(
+            @RequestBody @Valid UserUpdateRequest request,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+            ){
+        String username = customUserDetails.getUsername();
+        UserResponse response = userService.updateMyInfo(username,request);
+        return ApiResponseDto.success(SuccessCode.USER_UPDATE_MY_INFO_SUCCESS,response);
     }
 }
