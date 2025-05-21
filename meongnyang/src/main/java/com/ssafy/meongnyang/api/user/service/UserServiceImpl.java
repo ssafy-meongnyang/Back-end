@@ -114,4 +114,25 @@ public class UserServiceImpl implements UserService {
         );
     }
 
+    @Override
+    public void deleteMyAccount(String username) {
+
+        // 1. 유저 조회
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+
+        Long userId = user.getId();
+
+        // 2. 자식 테이블부터 삭제 TODO : 주석 해제필요
+//        petRepository.deleteByUserId(userId);         // 반려동물 삭제
+//        dietRepository.deleteByUserId(userId);        // 식단 기록 삭제
+//        commentRepository.deleteByUserId(userId);     // 댓글 삭제
+//        postRepository.deleteByUserId(userId);        // 게시글 삭제
+
+        // 3. 유저 삭제
+        userRepository.deleteUser(username);
+    }
+
 }
