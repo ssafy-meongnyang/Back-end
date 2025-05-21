@@ -13,5 +13,6 @@ public interface PetRepository {
     void insertAllergens(@Param("petId") Long petId, @Param("allergens") List<String> allergens );
     void insertHealthConcerns(@Param("petId") Long petId, @Param("concerns") List<String> concerns);
     void setRepresentative(@Param("petId") Long petId); // 대표 멍냥이 메서드 추후 추가
-
+    List<Pet> findPetsByUserId(@Param("userId") Long userId);
+    List<String> findHealthConcernsByPetId(@Param("petId") Long petId);
 }
