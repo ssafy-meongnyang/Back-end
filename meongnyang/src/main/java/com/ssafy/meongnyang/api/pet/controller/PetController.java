@@ -2,6 +2,7 @@ package com.ssafy.meongnyang.api.pet.controller;
 
 import com.ssafy.meongnyang.api.auth.security.CustomUserDetails;
 import com.ssafy.meongnyang.api.pet.dto.request.PetRequest;
+import com.ssafy.meongnyang.api.pet.dto.request.PetUpdateRequest;
 import com.ssafy.meongnyang.api.pet.dto.response.PetListResponse;
 import com.ssafy.meongnyang.api.pet.service.PetService;
 import com.ssafy.meongnyang.global.response.ApiResponseDto;
@@ -42,5 +43,17 @@ public class PetController {
     @GetMapping("/{petId}")
     public ApiResponseDto<?> getPetDetail(@PathVariable Long petId){
         return ApiResponseDto.success(SuccessCode.PET_DETAIL_GET_SUCCESS, petService.getPetDetail(petId));
+    }
+
+    // 멍냥이 정보 수정
+    @PatchMapping("/{petId}")
+    public ApiResponseDto<?> updatePetInfo(
+            @PathVariable Long petId,
+            @RequestBody PetUpdateRequest petUpdateRequest,
+            @AuthenticationPrincipal CustomUserDetails userDetails
+            ){
+        Long userId = userDetails.getUser().getId();
+        petService.updatePetInfo(userId, petId ,petUpdateRequest);
+        return ApiResponseDto.success(SuccessCode.PET_UPDATE_SUCCESS);
     }
 }
