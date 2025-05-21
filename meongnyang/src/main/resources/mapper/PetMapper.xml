@@ -30,4 +30,14 @@
             (#{petId}, #{c})
         </foreach>
     </insert>
+    <!--  반려동물 목록 가져오기 (등록순) -->
+    <select id="findPetsByUserId" resultType="com.ssafy.meongnyang.api.pet.domain.Pet">
+        SELECT * FROM pet
+        WHERE user_id = #{userId}
+        ORDER BY created_at ASC
+    </select>
+    <!--  한마리당 건강 관심사 가져오기  -->
+    <select id="findHealthConcernsByPetId" resultType="string">
+        SELECT concern FROM pet_health_concern WHERE pet_id = #{petId}
+    </select>
 </mapper>

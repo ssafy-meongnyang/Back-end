@@ -2,9 +2,12 @@ package com.ssafy.meongnyang.api.pet.service;
 
 import com.ssafy.meongnyang.api.pet.domain.Pet;
 import com.ssafy.meongnyang.api.pet.dto.request.PetRequest;
+import com.ssafy.meongnyang.api.pet.dto.response.PetListResponse;
 import com.ssafy.meongnyang.api.pet.repository.PetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -38,5 +41,25 @@ public class PetServiceImpl implements PetService{
         if(petRequest.healthConcerns() != null && !petRequest.healthConcerns().isEmpty()){
             petRepository.insertHealthConcerns(petId,petRequest.healthConcerns());
         }
+    }
+
+    @Override
+    public List<PetListResponse> getPetListByUserId(Long userId) {
+        List<Pet> pets = petRepository.findPetsByUserId(userId);
+
+        return pets.stream().map(pet ->{
+            List<String> concerns = petRepository.findHealthConcernsByPetId(pet.getId());
+            return new PetListResponse(
+                    pet.getId(),
+                    pet.getName(),
+                    pet.getBreed(),
+                    pet.getBirthDate(),
+                    pet.getWeight(),
+                    pet.getProfileImageUrl(),
+                    pet.getIsRepresentative(),
+
+                    concerns
+            );
+        }).toList();
     }
 }
