@@ -2,6 +2,7 @@ package com.ssafy.meongnyang.api.pet.service;
 
 import com.ssafy.meongnyang.api.pet.domain.Pet;
 import com.ssafy.meongnyang.api.pet.dto.request.PetRequest;
+import com.ssafy.meongnyang.api.pet.dto.request.PetUpdateRequest;
 import com.ssafy.meongnyang.api.pet.dto.response.PetDetailResponse;
 import com.ssafy.meongnyang.api.pet.dto.response.PetListResponse;
 import com.ssafy.meongnyang.api.pet.repository.PetRepository;
@@ -84,5 +85,36 @@ public class PetServiceImpl implements PetService{
                 allergens,
                 concerns
         );
+    }
+
+    @Override
+    public void updatePetInfo(Long userId, Long petId, PetUpdateRequest petUpdateRequest) {
+        // 1. 기존 멍냥이 정보 수정
+        Pet pet = Pet.builder()
+                .id(petId)
+                .userId(userId)
+                .name(petUpdateRequest.name())
+                .breed(petUpdateRequest.breed())
+                .birthDate(petUpdateRequest.birthDate())
+                .gender(petUpdateRequest.gender())
+                .weight(petUpdateRequest.weight())
+                .shape(petUpdateRequest.shape())
+                .isAllergic(petUpdateRequest.isAllergic())
+                .profileImageUrl(petUpdateRequest.profileImageUrl())
+                .build();
+
+        petRepository.updatePet(pet);
+
+        // 2. 기존 알러지 / 건강 관심사 초기화 후 새로 등록 (N:1 관계 갱신 시 삭제 후 재삽입이 가장 단순함)
+        petRepository.deleteAllergensByPetId(petId);
+        petRepository.deleteHealthConcernsByPetId(petId);
+
+        if (petUpdateRequest.allergens() != null && !petUpdateRequest.allergens().isEmpty()) {
+            petRepository.insertAllergens(petId, petUpdateRequest.allergens());
+        }
+
+        if (petUpdateRequest.healthConcerns() != null && !petUpdateRequest.healthConcerns().isEmpty()) {
+            petRepository.insertHealthConcerns(petId, petUpdateRequest.healthConcerns());
+        }
     }
 }

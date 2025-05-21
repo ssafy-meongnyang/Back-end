@@ -1,5 +1,6 @@
 package com.ssafy.meongnyang.api.user.service;
 
+import com.ssafy.meongnyang.api.pet.repository.PetRepository;
 import com.ssafy.meongnyang.api.user.domain.User;
 import com.ssafy.meongnyang.api.user.dto.request.PasswordRequest;
 import com.ssafy.meongnyang.api.user.dto.request.SignUpRequest;
@@ -19,6 +20,7 @@ import java.time.LocalDate;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PetRepository petRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -126,7 +128,7 @@ public class UserServiceImpl implements UserService {
         Long userId = user.getId();
 
         // 2. 자식 테이블부터 삭제 TODO : 주석 해제필요
-//        petRepository.deleteByUserId(userId);         // 반려동물 삭제
+        petRepository.deletePetByUserId(userId);         // 반려동물 삭제
 //        dietRepository.deleteByUserId(userId);        // 식단 기록 삭제
 //        commentRepository.deleteByUserId(userId);     // 댓글 삭제
 //        postRepository.deleteByUserId(userId);        // 게시글 삭제

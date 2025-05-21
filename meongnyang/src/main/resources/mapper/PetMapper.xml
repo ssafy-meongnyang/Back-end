@@ -30,7 +30,7 @@
             (#{petId}, #{c})
         </foreach>
     </insert>
-    <!--  반려동물 목록 가져오기 (등록순) -->
+    <!--  멍냥이 목록 가져오기 (등록순) -->
     <select id="findPetsByUserId" resultType="com.ssafy.meongnyang.api.pet.domain.Pet">
         SELECT * FROM pet
         WHERE user_id = #{userId}
@@ -47,4 +47,31 @@
     <select id="findAllergensByPetId" resultType="string">
         SELECT allergen FROM pet_allergen WHERE pet_id = #{petId}
     </select>
+    <!--  멍냥이 정보 수정하기  -->
+    <update id="updatePet">
+        UPDATE pet SET
+        name = #{name},
+        breed = #{breed},
+        birth_date = #{birthDate},
+        gender = #{gender},
+        weight = #{weight},
+        shape = #{shape},
+        is_allergic = #{isAllergic},
+        profile_image_url = #{profileImageUrl},
+        updated_at = CURRENT_TIMESTAMP
+        WHERE id = #{id} AND user_id = #{userId}
+    </update>
+
+    <delete id="deleteAllergensByPetId">
+        DELETE FROM pet_allergen WHERE pet_id = #{petId}
+    </delete>
+
+    <delete id="deleteHealthConcernsByPetId">
+        DELETE FROM pet_health_concern WHERE pet_id = #{petId}
+    </delete>
+
+    <!-- userId로 멍냥이 삭제   -->
+    <delete id="deletePetByUserId" parameterType="long">
+        DELETE FROM pet WHERE user_id = #{userId}
+    </delete>
 </mapper>
