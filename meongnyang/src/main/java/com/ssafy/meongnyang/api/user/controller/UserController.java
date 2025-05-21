@@ -1,6 +1,7 @@
 package com.ssafy.meongnyang.api.user.controller;
 
 import com.ssafy.meongnyang.api.auth.security.CustomUserDetails;
+import com.ssafy.meongnyang.api.user.dto.request.PasswordRequest;
 import com.ssafy.meongnyang.api.user.dto.request.SignUpRequest;
 import com.ssafy.meongnyang.api.user.dto.response.UserResponse;
 import com.ssafy.meongnyang.api.user.service.UserService;
@@ -46,5 +47,13 @@ public class UserController {
         String username = customUserDetails.getUsername();
         UserResponse userResponse= userService.getMyInfo(username);
         return ApiResponseDto.success(SuccessCode.USER_GET_INFO_SUCCESS, userResponse);
+    }
+
+    // 비밀번호 변경하기 API
+    @PutMapping("/password")
+    public ApiResponseDto<Boolean> changePassword(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody @Valid PasswordRequest passwordRequest){
+        String username = customUserDetails.getUsername();
+        userService.changePassword(username, passwordRequest);
+        return ApiResponseDto.success(SuccessCode.USER_UPDATE_PASSWORD_SUCCESS);
     }
 }

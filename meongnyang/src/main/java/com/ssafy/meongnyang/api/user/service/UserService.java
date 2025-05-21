@@ -1,5 +1,6 @@
 package com.ssafy.meongnyang.api.user.service;
 
+import com.ssafy.meongnyang.api.user.dto.request.PasswordRequest;
 import com.ssafy.meongnyang.api.user.dto.request.SignUpRequest;
 import com.ssafy.meongnyang.api.user.dto.response.UserResponse;
 import org.springframework.stereotype.Service;
@@ -10,4 +11,5 @@ public interface UserService {
     boolean existsByUsername(String username);
     boolean existsByNickname(String nickname);
     UserResponse getMyInfo(String username);
+    void changePassword(String username, PasswordRequest passwordRequest);
 }

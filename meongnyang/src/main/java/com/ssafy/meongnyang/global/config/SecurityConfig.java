@@ -40,9 +40,11 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
+                // TODO : /login, /register, /verify-email, / images 와 같이 로그인 상관없이 접근 가능한 경로 제외하고 삭제 필요
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/api/v1/user/register",
+                                "/api/v1/user/password",
                                 "/api/v1/auth/**",
                                 "/images/**",   // 이미지 경로 허용
                                 "/css/**",
