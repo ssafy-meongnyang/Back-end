@@ -2,6 +2,7 @@ package com.ssafy.meongnyang.api.comment.service;
 
 import com.ssafy.meongnyang.api.comment.domain.Comment;
 import com.ssafy.meongnyang.api.comment.dto.request.CommentCreateRequest;
+import com.ssafy.meongnyang.api.comment.dto.request.CommentUpdateRequest;
 import com.ssafy.meongnyang.api.comment.dto.response.CommentGetResponse;
 import com.ssafy.meongnyang.api.comment.repository.CommentRepository;
 import java.util.List;
@@ -25,5 +26,15 @@ public class CommentServiceImpl implements CommentService {
 
     public List<CommentGetResponse> getComment(Long boardId) {
         return commentRepository.getComment(boardId);
+    }
+
+    public Comment getCommentById(Long commentId) {
+        return commentRepository.getCommentById(commentId);
+    }
+
+    public void updateComment(CommentUpdateRequest commentUpdateRequest, Long commentId) {
+        Comment comment = commentRepository.getCommentById(commentId);
+        comment.setContent(commentUpdateRequest.content());
+        commentRepository.updateComment(comment);
     }
 }

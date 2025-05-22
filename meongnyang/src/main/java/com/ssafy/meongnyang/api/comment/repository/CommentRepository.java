@@ -9,4 +9,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface CommentRepository {
     void createComment(Comment comment);
     List<CommentGetResponse> getComment(Long boardId);
+    void updateComment(Comment comment);
+    Comment getCommentById(Long commentId);
 }
