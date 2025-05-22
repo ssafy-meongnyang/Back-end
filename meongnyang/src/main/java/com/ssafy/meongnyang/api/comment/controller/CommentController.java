@@ -7,6 +7,7 @@ import com.ssafy.meongnyang.global.common.annotation.UserId;
 import com.ssafy.meongnyang.global.response.ApiResponseDto;
 import com.ssafy.meongnyang.global.response.enums.SuccessCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,5 +41,11 @@ public class CommentController {
                                         @PathVariable Long commentId) {
         commentServiceImpl.updateComment(commentUpdateRequest, commentId);
         return ApiResponseDto.success(SuccessCode.COMMENT_UPDATE_SUCCESS);
+    }
+
+    @DeleteMapping("/comment/{commentId}")
+    public ApiResponseDto deleteComment(@PathVariable Long commentId) {
+        commentServiceImpl.deleteComment(commentId);
+        return ApiResponseDto.success(SuccessCode.COMMENT_DELETE_SUCCESS);
     }
 }

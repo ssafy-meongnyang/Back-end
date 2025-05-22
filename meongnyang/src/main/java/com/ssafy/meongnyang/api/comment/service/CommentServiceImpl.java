@@ -37,4 +37,8 @@ public class CommentServiceImpl implements CommentService {
         comment.setContent(commentUpdateRequest.content());
         commentRepository.updateComment(comment);
     }
+
+    public void deleteComment(Long commentId) {
+        commentRepository.deleteComment(commentId);
+    }
 }

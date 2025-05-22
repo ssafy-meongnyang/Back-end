@@ -18,9 +18,15 @@
         SELECT * FROM comment
         WHERE id = #{commentId};
     </select>
+
     <update id="updateComment" parameterType="com.ssafy.meongnyang.api.comment.domain.Comment">
         UPDATE comment SET
         content = #{content}
         WHERE id = #{id};
     </update>
+
+    <delete id="deleteComment" parameterType="Long">
+        DELETE FROM comment
+        WHERE id = #{commentId}
+    </delete>
 </mapper>
