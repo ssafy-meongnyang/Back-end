@@ -11,6 +11,16 @@
     <select id="getComment" resultType="com.ssafy.meongnyang.api.comment.dto.response.CommentGetResponse">
         SELECT c.id, u.nickname AS username, c.content, c.created_at FROM comment c
         JOIN users u ON c.user_id = u.id
-        WHERE c.board_id = #{boardId}
+        WHERE c.board_id = #{boardId};
     </select>
+
+    <select id="getCommentById" resultType="com.ssafy.meongnyang.api.comment.domain.Comment">
+        SELECT * FROM comment
+        WHERE id = #{commentId};
+    </select>
+    <update id="updateComment" parameterType="com.ssafy.meongnyang.api.comment.domain.Comment">
+        UPDATE comment SET
+        content = #{content}
+        WHERE id = #{id};
+    </update>
 </mapper>
