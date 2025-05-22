@@ -27,6 +27,7 @@ public enum SuccessCode {
     PET_DETAIL_GET_SUCCESS(200,HttpStatus.OK,"멍냥이 상세조회 성공"),
     PET_UPDATE_SUCCESS(200,HttpStatus.OK,"멍냥이 정보 수정 성공"),
     PET_DELETE_SUCCESS(200,HttpStatus.OK,"멍냥 데이터 삭제 성공"),
+    COMMENT_LIST_GET_SUCCESS(200, HttpStatus.OK, "댓글 전체 조회 성공"),
 
     //201 CREATED
     BOARD_CREATE_SUCCESS(201, HttpStatus.CREATED, "게시물 생성 성공"),

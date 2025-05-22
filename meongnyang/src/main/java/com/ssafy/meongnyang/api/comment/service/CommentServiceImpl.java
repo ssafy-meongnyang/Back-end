@@ -2,7 +2,9 @@ package com.ssafy.meongnyang.api.comment.service;
 
 import com.ssafy.meongnyang.api.comment.domain.Comment;
 import com.ssafy.meongnyang.api.comment.dto.request.CommentCreateRequest;
+import com.ssafy.meongnyang.api.comment.dto.response.CommentGetResponse;
 import com.ssafy.meongnyang.api.comment.repository.CommentRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +21,9 @@ public class CommentServiceImpl implements CommentService {
                 .content(commentCreateRequest.content())
                 .build();
         commentRepository.createComment(comment);
+    }
+
+    public List<CommentGetResponse> getComment(Long boardId) {
+        return commentRepository.getComment(boardId);
     }
 }
