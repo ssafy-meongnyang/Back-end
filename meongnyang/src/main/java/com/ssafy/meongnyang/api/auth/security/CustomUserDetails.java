@@ -37,6 +37,10 @@ public class CustomUserDetails implements UserDetails {
         return user.getUsername(); // 로그인용 아이디
     }
 
+    public Long getUserId(){
+        return user.getId();
+    }
+
     @Override
     public boolean isAccountNonLocked() {
         return true; // 계정 잠김 여부 (true는 사용가능

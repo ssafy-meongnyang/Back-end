@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.meongnyang.api.comment.repository.CommentRepository">
+    <insert id="createComment" parameterType="com.ssafy.meongnyang.api.comment.domain.Comment">
+        INSERT INTO comment (board_id, user_id, content)
+        VALUES (#{boardId}, #{userId}, #{content});
+    </insert>
+</mapper>
