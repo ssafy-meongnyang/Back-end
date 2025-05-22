@@ -11,4 +11,5 @@ public interface CommentRepository {
     List<CommentGetResponse> getComment(Long boardId);
     void updateComment(Comment comment);
     Comment getCommentById(Long commentId);
+    void deleteComment(Long commentId);
 }
