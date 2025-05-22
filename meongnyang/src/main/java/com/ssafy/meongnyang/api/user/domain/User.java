@@ -1,7 +1,6 @@
 package com.ssafy.meongnyang.api.user.domain;
 
-import com.ssafy.meongnyang.global.common.BaseTimeEntity;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,14 +13,18 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Setter
-public class User extends BaseTimeEntity {
+public class User{
     private Long id;
     private String name; // 이름
-    private String username; // 아이디
     private String nickname; // 닉네임
+    private String username; // 아이디
+    private String password; // 비밀번호
     private String phonenumber; // 휴대폰 번호
-    private String password;
-    private String email;
-    private String profileImageUrl;
-    private String role;
+    private String email; // 이메일
+    private String role; // 역할
+    private String profileImageUrl; // 프로필 이미지 
+    private LocalDate passwordUpdatedAt; // 비밀번호 업데이트 시간
+
+
+
 }

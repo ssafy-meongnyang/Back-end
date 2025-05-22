@@ -14,7 +14,10 @@ public enum ErrorCode {
     MISSING_REQUIRED_PARAMETER(400, HttpStatus.BAD_REQUEST, "필수 파라미터가 누락되었습니다."),
     DUPLICATION_USER_USERNAME(400, HttpStatus.BAD_REQUEST, "중복된 아이디입니다."),
     DUPLICATION_USER_NICKNAME(400, HttpStatus.BAD_REQUEST, "중복된 닉네임입니다."),
-
+    EMAIL_VERIFICATION_FAILED(400, HttpStatus.BAD_REQUEST,"인증 코드가 일치하지 않거나 만료되었습니다."),
+    PASSWORD_CONFIRM_NOT_MATCH(400,HttpStatus.BAD_REQUEST, "비밀번호와 비밀번호 확인이 일치하지 않습니다."),
+    INVALID_PASSWORD(400,HttpStatus.BAD_REQUEST, "현재 비밀번호가 정확하지 않습니다."),
+    USER_NOT_FOUND(400, HttpStatus.BAD_REQUEST, "존재하지 않는 사용자입니다."),
     //404 NOT FOUND
     NOT_FOUND_END_POINT(404, HttpStatus.NOT_FOUND, "엔드포인트를 찾을 수 없습니다."),
 

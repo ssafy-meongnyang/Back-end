@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.meongnyang.api.pet.repository.PetRepository">
+    <!-- 멍냥이 등록   -->
+    <insert id="insertPet" parameterType="com.ssafy.meongnyang.api.pet.domain.Pet" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pet (
+            user_id,name,breed,birth_date,gender,
+            weight,shape,is_allergic,profile_image_url
+        )
+        VALUES(
+            #{userId}, #{name}, #{breed}, #{birthDate}, #{gender},
+            #{weight}, #{shape}, #{isAllergic}, #{profileImageUrl}
+        )
+    </insert>
+    <!--  알러지 등록  -->
+    <insert id="insertAllergens">
+        INSERT INTO pet_allergen (pet_id, allergen)
+        VALUES 
+        <foreach collection="allergens" item="a" separator=",">
+            (#{petId}, #{a})
+        </foreach>
+    </insert>
+    <!--  건강 관심사 등록  -->
+    <insert id="insertHealthConcerns">
+        INSERT INTO pet_health_concern (pet_id, concern)
+        VALUES
+        <foreach collection="concerns" item="c" separator=",">
+            (#{petId}, #{c})
+        </foreach>
+    </insert>
+    <!--  멍냥이 목록 가져오기 (등록순) -->
+    <select id="findPetsByUserId" resultType="com.ssafy.meongnyang.api.pet.domain.Pet">
+        SELECT * FROM pet
+        WHERE user_id = #{userId}
+        ORDER BY created_at ASC
+    </select>
+    <!--  한마리당 건강 관심사 목록 가져오기  -->
+    <select id="findHealthConcernsByPetId" resultType="string">
+        SELECT concern FROM pet_health_concern WHERE pet_id = #{petId}
+    </select>
+    <select id="findPetById" resultType="com.ssafy.meongnyang.api.pet.domain.Pet">
+        SELECT * FROM pet WHERE id = #{petId}
+    </select>
+    <!-- 한마리당 알러지 목록 가져오기   -->
+    <select id="findAllergensByPetId" resultType="string">
+        SELECT allergen FROM pet_allergen WHERE pet_id = #{petId}
+    </select>
+    <!--  멍냥이 정보 수정하기  -->
+    <update id="updatePet">
+        UPDATE pet SET
+        name = #{name},
+        breed = #{breed},
+        birth_date = #{birthDate},
+        gender = #{gender},
+        weight = #{weight},
+        shape = #{shape},
+        is_allergic = #{isAllergic},
+        profile_image_url = #{profileImageUrl},
+        updated_at = CURRENT_TIMESTAMP
+        WHERE id = #{id} AND user_id = #{userId}
+    </update>
+
+    <delete id="deleteAllergensByPetId">
+        DELETE FROM pet_allergen WHERE pet_id = #{petId}
+    </delete>
+
+    <delete id="deleteHealthConcernsByPetId">
+        DELETE FROM pet_health_concern WHERE pet_id = #{petId}
+    </delete>
+
+    <!-- userId로 멍냥이 삭제   -->
+    <delete id="deletePetByUserId" parameterType="long">
+        DELETE FROM pet WHERE user_id = #{userId}
+    </delete>
+
+    <!--  petId로 멍냥 데이터 삭제  -->
+    <delete id="deletePetdata">
+        DELETE FROM pet WHERE id = #{petId} and user_id = #{userId}
+    </delete>
+</mapper>

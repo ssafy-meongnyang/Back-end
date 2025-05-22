@@ -1,4 +1,4 @@
-package com.ssafy.meongnyang.api.user.dto;
+package com.ssafy.meongnyang.api.user.dto.request;
 
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
