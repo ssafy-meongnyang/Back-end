@@ -1,9 +1,8 @@
 package com.ssafy.meongnyang.api.comment.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.ssafy.meongnyang.api.comment.domain.Comment;
+import com.ssafy.meongnyang.api.comment.dto.request.CommentCreateRequest;
 
-@Service
-@RequiredArgsConstructor
-public class CommentService {
+public interface CommentService {
+    void createComment(CommentCreateRequest request, Long boardId, Long userId);
 }
