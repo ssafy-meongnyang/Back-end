@@ -6,6 +6,7 @@ import com.ssafy.meongnyang.global.common.annotation.UserId;
 import com.ssafy.meongnyang.global.response.ApiResponseDto;
 import com.ssafy.meongnyang.global.response.enums.SuccessCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,5 +26,10 @@ public class CommentController {
                                         @UserId Long userId) {
         commentServiceImpl.createComment(commentCreateRequest, boardId, userId);
         return ApiResponseDto.success(SuccessCode.COMMENT_CREATE_SUCCESS);
+    }
+
+    @GetMapping("/board/{boardId}/comment")
+    public ApiResponseDto getComment(@PathVariable Long boardId) {
+        return ApiResponseDto.success(SuccessCode.COMMENT_LIST_GET_SUCCESS, commentServiceImpl.getComment(boardId));
     }
 }
