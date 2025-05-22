@@ -31,6 +31,11 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter(jwtTokenProvider);
+    }
+
     // 핵심 보안 설정 필터 체인
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
