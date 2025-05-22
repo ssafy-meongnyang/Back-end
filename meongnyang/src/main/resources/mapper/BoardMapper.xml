@@ -30,4 +30,18 @@
         FROM board b
         JOIN user u ON b.user_id = u.id
     </select>
+
+    <select id="getBoard" resultType="com.ssafy.meongnyang.api.board.domain.Board">
+        SELECT * FROM board
+        WHERE id = #{boardId}
+    </select>
+
+    <update id="updateBoard" parameterType="com.ssafy.meongnyang.api.board.domain.Board">
+        UPDATE board SET
+        category = #{category},
+        title = #{title},
+        content = #{content},
+        image_url = #{imageUrl}
+        WHERE id = #{id}
+    </update>
 </mapper>

@@ -11,4 +11,6 @@ public interface BoardRepository {
     void insertBoard(Board board);
     List<BoardListGetResponse> getBoardListWithUser();
     BoardGetResponse getBoardById(int boardId);
+    void updateBoard(Board board);
+    Board getBoard(int boardId);
 }

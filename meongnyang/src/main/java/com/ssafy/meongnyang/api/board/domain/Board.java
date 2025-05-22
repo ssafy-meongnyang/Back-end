@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 public class Board extends BaseTimeEntity {
+    private Long id;
     private String category;
     private Long userId;
     private String title;
