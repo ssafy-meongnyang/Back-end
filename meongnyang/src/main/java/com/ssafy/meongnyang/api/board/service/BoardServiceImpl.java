@@ -60,4 +60,8 @@ public class BoardServiceImpl implements BoardService {
     public Board getBoard(int boardId){
         return boardRepository.getBoard(boardId);
     }
+
+    public void deleteBoard(int boardId){
+        boardRepository.deleteBoard(boardId);
+    }
 }

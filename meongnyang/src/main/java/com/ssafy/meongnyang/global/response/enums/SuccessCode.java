@@ -18,6 +18,7 @@ public enum SuccessCode {
     LOGOUT_SUCCESS(200,HttpStatus.OK , "로그아웃이 완료되었습니다."),
     BOARD_GET_SUCCESS(200, HttpStatus.OK, "게시물 상세 조회 성공"),
     BOARD_UPDATE_SUCCESS(200, HttpStatus.OK, "게시물 수정 성공"),
+    BOARD_DELETE_SUCCESS(200, HttpStatus.OK, "게시물 삭제 성공"),
     USER_GET_INFO_SUCCESS(200, HttpStatus.OK, "마이페이지 내 정보 조회 성공"),
     USER_UPDATE_PASSWORD_SUCCESS(200, HttpStatus.OK, "비밀번호가 성공적으로 변경되었습니다."),
     USER_UPDATE_MY_INFO_SUCCESS(200,HttpStatus.OK,"마이페이지 내 정보 수정 성공"),

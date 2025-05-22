@@ -9,6 +9,7 @@ import com.ssafy.meongnyang.global.response.ApiResponseDto;
 import com.ssafy.meongnyang.global.response.enums.SuccessCode;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -49,5 +50,12 @@ public class BoardController {
     public ApiResponseDto updateBoard(@ModelAttribute BoardUpdateRequest boardUpdateRequest, @PathVariable int boardId){
         boardServiceImpl.updateBoard(boardUpdateRequest, boardId);
         return ApiResponseDto.success(SuccessCode.BOARD_UPDATE_SUCCESS);
+    }
+
+    //게시물 삭제
+    @DeleteMapping("/board/{boardId}")
+    public ApiResponseDto deleteBoard(@PathVariable int boardId) {
+        boardServiceImpl.deleteBoard(boardId);
+        return ApiResponseDto.success(SuccessCode.BOARD_DELETE_SUCCESS);
     }
 }

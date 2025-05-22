@@ -13,4 +13,5 @@ public interface BoardRepository {
     BoardGetResponse getBoardById(int boardId);
     void updateBoard(Board board);
     Board getBoard(int boardId);
+    void deleteBoard(int boardId);
 }

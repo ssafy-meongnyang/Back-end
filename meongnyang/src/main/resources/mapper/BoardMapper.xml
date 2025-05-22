@@ -44,4 +44,9 @@
         image_url = #{imageUrl}
         WHERE id = #{id}
     </update>
+
+    <delete id="deleteBoard" parameterType="int">
+        DELETE FROM board
+        WHERE id = #{boardId}
+    </delete>
 </mapper>

@@ -13,4 +13,5 @@ public interface BoardService {
     BoardGetResponse getBoardById(int boardId);
     void updateBoard(BoardUpdateRequest boardUpdateRequest, int boardId);
     Board getBoard(int boardId);
+    void deleteBoard(int boardId);
 }
