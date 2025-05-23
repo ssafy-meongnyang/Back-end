@@ -14,4 +14,5 @@ public interface BoardService {
     void updateBoard(BoardUpdateRequest boardUpdateRequest, int boardId);
     Board getBoard(int boardId);
     void deleteBoard(int boardId);
+    List<BoardListGetResponse> searchBoard(String writer, String title, String content);
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -58,5 +59,12 @@ public class BoardController {
     public ApiResponseDto deleteBoard(@PathVariable int boardId) {
         boardServiceImpl.deleteBoard(boardId);
         return ApiResponseDto.success(SuccessCode.BOARD_DELETE_SUCCESS);
+    }
+
+    @GetMapping("/board/search")
+    public ApiResponseDto searchBoard(@RequestParam (required = false) String writer,
+                                      @RequestParam (required = false) String title,
+                                      @RequestParam (required = false) String content){
+        return ApiResponseDto.success(SuccessCode.BOARD_SEARCH_SUCCESS, boardServiceImpl.searchBoard(writer, title, content));
     }
 }
