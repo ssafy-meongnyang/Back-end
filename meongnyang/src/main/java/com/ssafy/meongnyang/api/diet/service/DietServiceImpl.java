@@ -2,6 +2,7 @@ package com.ssafy.meongnyang.api.diet.service;
 
 import com.ssafy.meongnyang.api.diet.domain.Diet;
 import com.ssafy.meongnyang.api.diet.dto.request.DietRequest;
+import com.ssafy.meongnyang.api.diet.dto.response.DietListResponse;
 import com.ssafy.meongnyang.api.diet.dto.response.DietResponse;
 import com.ssafy.meongnyang.api.diet.repository.DietRepository;
 import com.ssafy.meongnyang.global.external.S3Service;
@@ -61,7 +62,7 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public List<Diet> getDietList(Long userId) {
+    public List<DietListResponse> getDietList(Long userId) {
         return dietRepository.selectDietListByUserId(userId);
     }
 
