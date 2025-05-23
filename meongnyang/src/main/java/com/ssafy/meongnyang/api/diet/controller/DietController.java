@@ -31,8 +31,16 @@ public class DietController {
     @GetMapping("/list")
     public ApiResponseDto<?> getDietList(@AuthenticationPrincipal CustomUserDetails userDetails) {
         Long userId = userDetails.getUser().getId();
-        List<Diet> dietList = dietService.getDietList(userId);
+        List<Diet> dietList = dietService.getDietList(userId); // DietListResponse로 수정 필요
         return ApiResponseDto.success(SuccessCode.DIET_LIST_GET_SUCCESS);
     }
 
+    // 식단 상세 조회하기
+    @GetMapping("/{dietId}")
+    public ApiResponseDto<?> getDietDetail(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long dietId){
+        Long userId = userDetails.getUser().getId();
+        dietService.getDietDetail(userId, dietId);
+        return ApiResponseDto.success(SuccessCode.DIET_GET_DETAIL_SUCCESS);
+
+    }
 }
