@@ -49,4 +49,25 @@
         DELETE FROM board
         WHERE id = #{boardId}
     </delete>
+
+    <select id="searchBoard" resultType="com.ssafy.meongnyang.api.board.dto.response.BoardListGetResponse">
+        SELECT b.category,
+        b.title,
+        u.nickname,
+        DATE_FORMAT(b.created_at, '%Y-%m-%d') AS date
+        FROM board b
+        JOIN users u ON b.user_id = u.id
+        <where>
+            <if test="title != null and title != ''">
+                AND (b.title LIKE CONCAT('%', #{title}, '%'))
+            </if>
+            <if test="content != null and content != ''">
+                AND (b.content LIKE CONCAT('%', #{content}, '%'))
+            </if>
+            <if test="writer != null and writer != ''">
+                AND u.nickname = #{writer}
+            </if>
+        </where>
+        ORDER BY b.created_at DESC
+    </select>
 </mapper>

@@ -64,4 +64,8 @@ public class BoardServiceImpl implements BoardService {
     public void deleteBoard(int boardId){
         boardRepository.deleteBoard(boardId);
     }
+
+    public List<BoardListGetResponse> searchBoard(String writer, String title, String content) {
+        return boardRepository.searchBoard(writer, title, content);
+    }
 }
