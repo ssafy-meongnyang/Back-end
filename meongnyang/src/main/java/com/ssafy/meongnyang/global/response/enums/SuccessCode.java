@@ -37,7 +37,8 @@ public enum SuccessCode {
     BOARD_CREATE_SUCCESS(201, HttpStatus.CREATED, "게시물 생성 성공"),
     REGISTER_SUCCESS(201, HttpStatus.CREATED, "회원가입이 완료되었습니다."),
     PET_REGISTER_SUCCESS(201, HttpStatus.CREATED,"멍냥이 등록이 완료되었습니다."),
-    COMMENT_CREATE_SUCCESS(201, HttpStatus.CREATED, "댓글 등록 성공")
+    COMMENT_CREATE_SUCCESS(201, HttpStatus.CREATED, "댓글 등록 성공"),
+    DIET_CREATE_SUCCESS(201, HttpStatus.CREATED,"식단 등록 성공")
     ;
 
     private final int code;
