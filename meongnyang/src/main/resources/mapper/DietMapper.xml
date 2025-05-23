@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.meongnyang.api.diet.repository.DietRepository">
+    <insert id="insertDiet" parameterType="com.ssafy.meongnyang.api.diet.domain.Diet">
+        INSERT INTO diet(
+            user_id,
+            date,
+            breakfast_img_path, breakfast_des,
+            lunch_img_path, lunch_des,
+            dinner_img_path, dinner_des,
+            snack, memo, exercise
+        ) VALUES (
+            #{userId},
+            #{date},
+            #{breakfastImgPath},
+            #{breakfastDes},
+            #{lunchImgPath},
+            #{lunchDes},
+            #{dinnerImgPath},
+            #{dinnerDes},
+            #{snack},
+            #{memo},
+            #{exercise}
+        )
+
+    </insert>
+</mapper>
