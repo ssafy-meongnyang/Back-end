@@ -21,11 +21,11 @@ public class BoardServiceImpl implements BoardService {
 
     private static final String BOARD_FILE_PATH = "board_file/";
     private static final String BUCKET_PATH = "https://meongnyang-ssafy.s3.ap-northeast-2.amazonaws.com/";
-    public void createBoard(BoardCreateRequest boardCreateRequest) {
+    public void createBoard(BoardCreateRequest boardCreateRequest, Long userId) {
         try {
             Board board = Board.builder()
                     .category(boardCreateRequest.category())
-                    .userId(boardCreateRequest.userId()) //아직 토큰 구현이 안된 것 같아서 일단 임의로 넣게 만들었습니다
+                    .userId(userId)
                     .title(boardCreateRequest.title())
                     .content(boardCreateRequest.content())
                     .imageUrl(BUCKET_PATH + s3Service.uploadImage(BOARD_FILE_PATH, boardCreateRequest.image()))
