@@ -6,7 +6,6 @@ public record BoardCreateRequest(
         String category,
         String title,
         String content,
-        MultipartFile image,
-        Long userId
+        MultipartFile image
 ) {
 }

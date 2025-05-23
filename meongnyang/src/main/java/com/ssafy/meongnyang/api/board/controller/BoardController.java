@@ -5,6 +5,7 @@ import com.ssafy.meongnyang.api.board.dto.request.BoardUpdateRequest;
 import com.ssafy.meongnyang.api.board.dto.response.BoardGetResponse;
 import com.ssafy.meongnyang.api.board.dto.response.BoardListGetResponse;
 import com.ssafy.meongnyang.api.board.service.BoardServiceImpl;
+import com.ssafy.meongnyang.global.common.annotation.UserId;
 import com.ssafy.meongnyang.global.response.ApiResponseDto;
 import com.ssafy.meongnyang.global.response.enums.SuccessCode;
 import java.util.List;
@@ -28,8 +29,8 @@ public class BoardController {
 
     //게시물 등록
     @PostMapping("/board")
-    public ApiResponseDto createBoard(@ModelAttribute BoardCreateRequest boardCreateRequest) {
-        boardServiceImpl.createBoard(boardCreateRequest);
+    public ApiResponseDto createBoard(@ModelAttribute BoardCreateRequest boardCreateRequest, @UserId Long userId) {
+        boardServiceImpl.createBoard(boardCreateRequest, userId);
         return ApiResponseDto.success(SuccessCode.BOARD_CREATE_SUCCESS);
     }
 

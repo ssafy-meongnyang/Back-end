@@ -8,7 +8,7 @@ import com.ssafy.meongnyang.api.board.dto.response.BoardListGetResponse;
 import java.util.List;
 
 public interface BoardService {
-    void createBoard(BoardCreateRequest boardCreateRequest);
+    void createBoard(BoardCreateRequest boardCreateRequest, Long userId);
     List<BoardListGetResponse> getBoardList();
     BoardGetResponse getBoardById(int boardId);
     void updateBoard(BoardUpdateRequest boardUpdateRequest, int boardId);
