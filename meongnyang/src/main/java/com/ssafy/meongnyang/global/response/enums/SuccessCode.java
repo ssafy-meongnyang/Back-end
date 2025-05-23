@@ -31,6 +31,7 @@ public enum SuccessCode {
     COMMENT_LIST_GET_SUCCESS(200, HttpStatus.OK, "댓글 전체 조회 성공"),
     COMMENT_UPDATE_SUCCESS(200, HttpStatus.OK, "댓글 수정 성공"),
     COMMENT_DELETE_SUCCESS(200, HttpStatus.OK, "댓글 삭제 성공"),
+    AI_SUCCESS(200, HttpStatus.OK, "AI 응답 성공"),
 
     //201 CREATED
     BOARD_CREATE_SUCCESS(201, HttpStatus.CREATED, "게시물 생성 성공"),
