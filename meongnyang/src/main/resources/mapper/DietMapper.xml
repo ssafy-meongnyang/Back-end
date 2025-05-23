@@ -7,6 +7,7 @@
         INSERT INTO diet(
             user_id,
             date,
+            title,
             breakfast_img_path, breakfast_des,
             lunch_img_path, lunch_des,
             dinner_img_path, dinner_des,
@@ -14,6 +15,7 @@
         ) VALUES (
             #{userId},
             #{date},
+            #{title},
             #{breakfastImgPath},
             #{breakfastDes},
             #{lunchImgPath},
@@ -26,4 +28,11 @@
         )
 
     </insert>
+    <select id="selectDietListByUserId" resultType="com.ssafy.meongnyang.api.diet.domain.Diet">
+        SELECT *
+        FROM diet
+        WHERE user_id = #{userId}
+        ORDER BY created_at ASC
+    </select>
+
 </mapper>
