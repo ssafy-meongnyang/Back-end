@@ -28,8 +28,9 @@
         )
 
     </insert>
-    <select id="selectDietListByUserId" resultType="com.ssafy.meongnyang.api.diet.domain.Diet">
-        SELECT *
+    <select id="selectDietListByUserId" resultType="com.ssafy.meongnyang.api.diet.dto.response.DietListResponse">
+        SELECT
+        user_id,title
         FROM diet
         WHERE user_id = #{userId}
         ORDER BY created_at ASC
