@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @Builder
 public class DietRequest {
     LocalDate date;
+    String title;
     MultipartFile breakfastImg;
     String breakfastDes;
     MultipartFile lunchImg;

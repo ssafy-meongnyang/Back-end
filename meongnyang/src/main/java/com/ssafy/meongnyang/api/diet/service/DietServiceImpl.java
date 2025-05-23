@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +34,7 @@ public class DietServiceImpl implements DietService {
             Diet diet = Diet.builder()
                     .userId(userId)
                     .date(dietRequest.getDate())
+                    .title(dietRequest.getTitle())
                     .breakfastImgPath(breakfastPath)
                     .breakfastDes(dietRequest.getBreakfastDes())
                     .lunchImgPath(lunchPath)
@@ -54,5 +57,10 @@ public class DietServiceImpl implements DietService {
     private String uploadImageToS3(MultipartFile file) throws IOException {
         if (file == null || file.isEmpty()) return null;
         return BUCKET_PATH + s3Service.uploadImage(DIET_FILE_PATH, file);
+    }
+
+    @Override
+    public List<Diet> getDietList(Long userId) {
+        return dietRepository.selectDietListByUserId(userId);
     }
 }
