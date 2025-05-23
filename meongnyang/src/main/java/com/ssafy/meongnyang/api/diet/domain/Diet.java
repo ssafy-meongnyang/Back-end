@@ -18,7 +18,7 @@ public class Diet {
     private Long userId; // 유저 식별자 (외래키 역할)
 
     private LocalDate date;
-
+    private String title;
     private String breakfastImgPath; // 이미지 파일 경로 (ex: "/images/breakfast123.jpg")
     private String breakfastDes;
 
