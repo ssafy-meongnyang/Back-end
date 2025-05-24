@@ -46,4 +46,21 @@
         WHERE user_id = #{userId}
         AND diet_id = #{dietId}
     </select>
+    <update id="updateDiet" parameterType="com.ssafy.meongnyang.api.diet.domain.Diet">
+        UPDATE diet
+        SET
+        date = #{date},
+        title = #{title},
+        breakfast_img_path = #{breakfastImgPath},
+        breakfast_des = #{breakfastDes},
+        lunch_img_path = #{lunchImgPath},
+        lunch_des = #{lunchDes},
+        dinner_img_path = #{dinnerImgPath},
+        dinner_des = #{dinnerDes},
+        snack = #{snack},
+        memo = #{memo},
+        exercise = #{exercise}
+        WHERE diet_id = #{dietId}
+        AND user_id = #{userId}
+    </update>
 </mapper>
