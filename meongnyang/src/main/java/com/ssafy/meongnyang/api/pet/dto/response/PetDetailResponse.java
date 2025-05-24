@@ -11,9 +11,9 @@ public record PetDetailResponse(
         String gender,
         Integer weight,
         String shape,
-        Boolean isAllergic,
-        String profileImageUrl,
-        boolean isRepresentative,
+        Boolean allergic,
+        String profileImagePath,
+        boolean representative,
         List<String> allergens,
         List<String> healthConcerns
 ) {

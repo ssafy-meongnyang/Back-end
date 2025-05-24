@@ -30,7 +30,7 @@ public class PetController {
         return ApiResponseDto.success(SuccessCode.PET_REGISTER_SUCCESS);
     }
 
-    // 멍냥이 목록 조회
+    // 멍냥이 목록 조회하기
     @GetMapping("/list")
     public ApiResponseDto<?> getMyPets(@AuthenticationPrincipal CustomUserDetails userDetails) {
         Long userId = userDetails.getUser().getId();
@@ -38,13 +38,13 @@ public class PetController {
         return ApiResponseDto.success(SuccessCode.PET_LIST_GET_SUCCESS, pets);
     }
 
-    // 멍냥이 상세 조회
+    // 멍냥이 상세 조회하기
     @GetMapping("/{petId}")
     public ApiResponseDto<?> getPetDetail(@PathVariable Long petId){
         return ApiResponseDto.success(SuccessCode.PET_DETAIL_GET_SUCCESS, petService.getPetDetail(petId));
     }
 
-    // 멍냥이 정보 수정
+    // 멍냥이 정보 수정하기
     @PatchMapping("/{petId}")
     public ApiResponseDto<?> updatePetInfo(
             @PathVariable Long petId,
@@ -56,7 +56,7 @@ public class PetController {
         return ApiResponseDto.success(SuccessCode.PET_UPDATE_SUCCESS);
     }
 
-    // 멍냥이 데이터 삭제
+    // 멍냥이 데이터 삭제하기
     @DeleteMapping("/{petId}")
     public ApiResponseDto<?> deletePetdata(
             @AuthenticationPrincipal CustomUserDetails userDetails,
