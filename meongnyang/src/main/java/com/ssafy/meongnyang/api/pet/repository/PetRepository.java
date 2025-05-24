@@ -24,5 +24,5 @@ public interface PetRepository {
     void deleteHealthConcernsByPetId(@Param("petId") Long petId);
 
     void deletePetByUserId(Long userId);
-    void deletePetdata(@Param("userId") Long userId, @Param("petId") Long petId);
+    void deletePetData(@Param("userId") Long userId, @Param("petId") Long petId);
 }

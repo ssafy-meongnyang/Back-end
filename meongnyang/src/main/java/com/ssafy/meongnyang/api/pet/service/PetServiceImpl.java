@@ -152,7 +152,7 @@ public class PetServiceImpl implements PetService{
     }
 
     @Override
-    public void deletePetdata(Long userId, Long petId) {
-        petRepository.deletePetdata(userId,petId);
+    public void deletePetData(Long userId, Long petId) {
+        petRepository.deletePetData(userId,petId);
     }
 }

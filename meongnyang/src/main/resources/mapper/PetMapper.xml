@@ -79,7 +79,7 @@
     </delete>
 
     <!--  petId로 멍냥 데이터 삭제  -->
-    <delete id="deletePetdata">
+    <delete id="deletePetData">
         DELETE FROM pet WHERE id = #{petId} and user_id = #{userId}
     </delete>
 </mapper>

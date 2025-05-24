@@ -58,12 +58,12 @@ public class PetController {
 
     // 멍냥이 데이터 삭제하기
     @DeleteMapping("/{petId}")
-    public ApiResponseDto<?> deletePetdata(
+    public ApiResponseDto<?> deletePetData(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable Long petId
             ){
         Long userId = userDetails.getUser().getId();
-        petService.deletePetdata(userId, petId);
+        petService.deletePetData(userId, petId);
         return ApiResponseDto.success(SuccessCode.PET_DELETE_SUCCESS);
     }
 }
