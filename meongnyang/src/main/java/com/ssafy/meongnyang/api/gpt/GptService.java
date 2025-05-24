@@ -53,7 +53,7 @@ public class GptService {
             sb.append("  품종: ").append(pet.breed()).append("\n");
             sb.append("  생일: ").append(pet.birthDate()).append("\n");
             sb.append("  몸무게: ").append(pet.weight()).append("kg\n");
-            sb.append("  대표 반려동물 여부: ").append(pet.isRepresentative() ? "예" : "아니오").append("\n");
+            sb.append("  대표 반려동물 여부: ").append(pet.representative() ? "예" : "아니오").append("\n");
 
             List<String> concerns = pet.healthConcerns();
             if (concerns != null && !concerns.isEmpty()) {

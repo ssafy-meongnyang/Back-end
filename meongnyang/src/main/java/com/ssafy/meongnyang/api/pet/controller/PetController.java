@@ -23,9 +23,8 @@ public class PetController {
 
     // 멍냥이 등록하기
     @PostMapping("")
-    public ApiResponseDto<PetRequest> registerPet(@ModelAttribute PetRequest petRequest,
+    public ApiResponseDto<?> registerPet(@ModelAttribute PetRequest petRequest,
                                                   @AuthenticationPrincipal CustomUserDetails userDetails){
-
         Long userId = userDetails.getUser().getId();
         petService.registerPet(userId,petRequest);
         return ApiResponseDto.success(SuccessCode.PET_REGISTER_SUCCESS);

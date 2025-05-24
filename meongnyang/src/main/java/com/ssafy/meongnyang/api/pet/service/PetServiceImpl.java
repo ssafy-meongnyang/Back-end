@@ -70,11 +70,14 @@ public class PetServiceImpl implements PetService{
         List<Pet> pets = petRepository.findPetsByUserId(userId);
 
         return pets.stream().map(pet ->{
+            // 관심 건강 조회
             List<String> concerns = petRepository.findHealthConcernsByPetId(pet.getId());
+            // 각 멍냥이에 대해 PetListResponse로 변환
             return new PetListResponse(
                     pet.getId(),
                     pet.getName(),
                     pet.getBreed(),
+                    pet.getGender(),
                     pet.getBirthDate(),
                     pet.getWeight(),
                     pet.getProfileImagePath(),

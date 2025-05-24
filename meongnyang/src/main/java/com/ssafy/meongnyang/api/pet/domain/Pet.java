@@ -31,24 +31,4 @@ public class Pet {
     private String createdAt;
     private String updatedAt;
 
-    @Override
-    public String toString() {
-        return "Pet{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", name='" + name + '\'' +
-                ", breed='" + breed + '\'' +
-                ", birthDate=" + birthDate +
-                ", gender='" + gender + '\'' +
-                ", weight=" + weight +
-                ", shape='" + shape + '\'' +
-                ", allergic=" + allergic +
-                ", healthConcerns=" + healthConcerns +
-                ", allergens=" + allergens +
-                ", profileImagePath='" + profileImagePath + '\'' +
-                ", representative=" + representative +
-                ", createdAt='" + createdAt + '\'' +
-                ", updatedAt='" + updatedAt + '\'' +
-                '}';
-    }
 }
