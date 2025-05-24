@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface UserService {
-    void register(SignUpRequest userdto); //회원가입
+    void register(SignUpRequest signUpRequest); //회원가입
     boolean existsByUsername(String username);
     boolean existsByNickname(String nickname);
     UserResponse getMyInfo(String username);
