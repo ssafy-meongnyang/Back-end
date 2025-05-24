@@ -1,5 +1,7 @@
 package com.ssafy.meongnyang.api.diet.dto.request;
 
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,15 +12,26 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class DietRequest {
+    @NotNull
     LocalDate date;
+    @NotNull
     String title;
-    MultipartFile breakfastImg;
+    @Nullable
+    MultipartFile breakfastImgPath;
+    @Nullable
     String breakfastDes;
-    MultipartFile lunchImg;
+    @Nullable
+    MultipartFile lunchImgPath;
+    @Nullable
     String lunchDes;
-    MultipartFile dinnerImg;
+    @Nullable
+    MultipartFile dinnerImgPath;
+    @Nullable
     String dinnerDes;
+    @Nullable
     String snack;
+    @Nullable
     String memo;
+    @Nullable
     String exercise;
 }

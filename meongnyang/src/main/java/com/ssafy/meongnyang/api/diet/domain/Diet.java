@@ -15,11 +15,11 @@ import java.time.LocalDate;
 @Builder
 public class Diet {
     private Long dietId;
-    private Long userId; // 유저 식별자 (외래키 역할)
+    private Long userId;
 
     private LocalDate date;
     private String title;
-    private String breakfastImgPath; // 이미지 파일 경로 (ex: "/images/breakfast123.jpg")
+    private String breakfastImgPath;
     private String breakfastDes;
 
     private String lunchImgPath;
