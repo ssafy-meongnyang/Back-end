@@ -24,30 +24,30 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void register(SignUpRequest dto) {
+    public void register(SignUpRequest signUpRequest) {
 
         // 1. 아이디 중복 확인
-        if (userRepository.existsByUsername(dto.getUsername())) {
+        if (userRepository.existsByUsername(signUpRequest.username())) {
             throw new CustomException(ErrorCode.DUPLICATION_USER_USERNAME);
         }
 
         // 2. 닉네임 중복 확인
-        if (userRepository.existsByNickname(dto.getNickname())) {
+        if (userRepository.existsByNickname(signUpRequest.nickname())) {
             throw new CustomException(ErrorCode.DUPLICATION_USER_NICKNAME);
         }
 
         // 3. 비밀번호 암호화
-        String encodedPassword = passwordEncoder.encode(dto.getPassword());
+        String encodedPassword = passwordEncoder.encode(signUpRequest.password());
 
         // 4. 엔티티 변환
         String imageUrl = "http://localhost:8080/images/default-profile.png";
         User user = User.builder()
-                .username(dto.getUsername())
+                .username(signUpRequest.username())
                 .password(encodedPassword)
-                .name(dto.getName())
-                .nickname(dto.getNickname())
-                .email(dto.getEmail())
-                .phonenumber(dto.getPhonenumber())
+                .name(signUpRequest.name())
+                .nickname(signUpRequest.nickname())
+                .email(signUpRequest.email())
+                .phoneNumber(signUpRequest.phoneNumber())
                 .role("USER")              // 디폴트 역할
                 .profileImageUrl(imageUrl) // 디폴트 이미지
                 .passwordUpdatedAt(LocalDate.now()) // 디폴트 패스워드 업데이트 시간
@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService {
 
         user.setNickname(request.nickname());
         user.setEmail(request.email());
-        user.setPhonenumber(request.phonenumber());
+        user.setPhoneNumber(request.phonenumber());
 
 
         // 프로필 이미지가 null이면 기본 이미지로 설정
@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService {
         return new UserResponse(
                 user.getNickname(),
                 user.getEmail(),
-                user.getPhonenumber(),
+                user.getPhoneNumber(),
                 user.getProfileImageUrl(),
                 user.getPasswordUpdatedAt()
         );
