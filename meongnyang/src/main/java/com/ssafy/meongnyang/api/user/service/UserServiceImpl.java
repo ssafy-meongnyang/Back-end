@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
         String encodedNewPassword = passwordEncoder.encode(passwordRequest.newPassword());
         
         // 비밀번호 업데이트
-        int result = userRepository.updatePassword(username, encodedNewPassword);
+        userRepository.updatePassword(username, encodedNewPassword);
     }
     private static final String DEFAULT_PROFILE_IMAGE_URL = "http://localhost:8080/images/default-profile.png";
     @Override
