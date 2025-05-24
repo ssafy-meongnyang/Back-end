@@ -7,10 +7,11 @@ public record PetListResponse(
         Long id,
         String name,
         String breed,
-        LocalDate birthDate,
+        String gender,
+        LocalDate birthDate, // 나이 계산용
         Integer weight,
-        String profileImageUrl,
-        boolean isRepresentative,
+        String profileImagePath,
+        Boolean representative,
         List<String> healthConcerns
 ) {
 }

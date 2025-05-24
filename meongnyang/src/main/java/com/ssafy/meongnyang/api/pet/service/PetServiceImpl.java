@@ -6,9 +6,12 @@ import com.ssafy.meongnyang.api.pet.dto.request.PetUpdateRequest;
 import com.ssafy.meongnyang.api.pet.dto.response.PetDetailResponse;
 import com.ssafy.meongnyang.api.pet.dto.response.PetListResponse;
 import com.ssafy.meongnyang.api.pet.repository.PetRepository;
+import com.ssafy.meongnyang.global.external.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -16,33 +19,50 @@ import java.util.List;
 public class PetServiceImpl implements PetService{
     private final PetRepository petRepository;
 
+    private final S3Service s3Service;
+
+    private static final String BUCKET_PATH = "https://meongnyang-ssafy.s3.ap-northeast-2.amazonaws.com/";
+    private static final String DIET_FILE_PATH = "pet_file/";
+
+    private String uploadImageToS3(MultipartFile file) throws IOException {
+        if (file == null || file.isEmpty()) return null;
+        return BUCKET_PATH + s3Service.uploadImage(DIET_FILE_PATH, file);
+    }
     @Override
     public void registerPet(Long userId, PetRequest petRequest) {
         // 1. DTO -> Entity로 변환
-        Pet pet = Pet.builder()
-                .userId(userId)
-                .name(petRequest.name())
-                .breed(petRequest.breed())
-                .birthDate(petRequest.birthDate())
-                .gender(petRequest.gender())
-                .weight(petRequest.weight())
-                .shape(petRequest.shape())
-                .isAllergic(petRequest.isAllergic())
-                .profileImageUrl(petRequest.profileImageUrl())
-                .isRepresentative(false)
-                .build();
+        Pet pet = null;
+        try {
+            pet = Pet.builder()
+                    .userId(userId)
+                    .name(petRequest.getName())
+                    .breed(petRequest.getBreed())
+                    .birthDate(petRequest.getBirthDate())
+                    .gender(petRequest.getGender())
+                    .weight(petRequest.getWeight())
+                    .shape(petRequest.getShape())
+                    .allergic(petRequest.getAllergic())
+                    .profileImagePath(uploadImageToS3(petRequest.getProfileImagePath()))
+                    .representative(false)
+                    .build();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(pet);
         // 2. Insert + PK 자동 세팅
         petRepository.insertPet(pet);
         Long petId = pet.getId();
         // 3. 알러지 등록
-        if(petRequest.allergens() != null && !petRequest.allergens().isEmpty()){
-            petRepository.insertAllergens(petId,petRequest.allergens());
+        if(petRequest.getAllergens() != null && !petRequest.getAllergens().isEmpty()){
+            petRepository.insertAllergens(petId,petRequest.getAllergens());
         }
 
         // 4. 건강 관심사 등록
-        if(petRequest.healthConcerns() != null && !petRequest.healthConcerns().isEmpty()){
-            petRepository.insertHealthConcerns(petId,petRequest.healthConcerns());
+        if(petRequest.getHealthConcerns() != null && !petRequest.getHealthConcerns().isEmpty()){
+            petRepository.insertHealthConcerns(petId,petRequest.getHealthConcerns());
         }
+
     }
 
     @Override
@@ -50,14 +70,17 @@ public class PetServiceImpl implements PetService{
         List<Pet> pets = petRepository.findPetsByUserId(userId);
 
         return pets.stream().map(pet ->{
+            // 관심 건강 조회
             List<String> concerns = petRepository.findHealthConcernsByPetId(pet.getId());
+            // 각 멍냥이에 대해 PetListResponse로 변환
             return new PetListResponse(
                     pet.getId(),
                     pet.getName(),
                     pet.getBreed(),
+                    pet.getGender(),
                     pet.getBirthDate(),
                     pet.getWeight(),
-                    pet.getProfileImageUrl(),
+                    pet.getProfileImagePath(),
                     pet.isRepresentative(),
                     concerns
             );
@@ -78,8 +101,8 @@ public class PetServiceImpl implements PetService{
                 pet.getGender(),
                 pet.getWeight(),
                 pet.getShape(),
-                pet.getIsAllergic(),
-                pet.getProfileImageUrl(),
+                pet.getAllergic(),
+                pet.getProfileImagePath(),
                 pet.isRepresentative(),
                 allergens,
                 concerns
@@ -88,20 +111,31 @@ public class PetServiceImpl implements PetService{
 
     @Override
     public void updatePetInfo(Long userId, Long petId, PetUpdateRequest petUpdateRequest) {
-        // 1. 기존 멍냥이 정보 수정
-        Pet pet = Pet.builder()
-                .id(petId)
-                .userId(userId)
-                .name(petUpdateRequest.name())
-                .breed(petUpdateRequest.breed())
-                .birthDate(petUpdateRequest.birthDate())
-                .gender(petUpdateRequest.gender())
-                .weight(petUpdateRequest.weight())
-                .shape(petUpdateRequest.shape())
-                .isAllergic(petUpdateRequest.isAllergic())
-                .profileImageUrl(petUpdateRequest.profileImageUrl())
-                .build();
-
+        Pet pet = null;
+        try {
+            // 0. 파일 이미지 존재여부 확인
+            // null인 경우 : 기존 이미지 그대로 유지
+            // isEmpty인 경우 :  사진 미선택 -> 기존 이미지 그대로 유지
+            Pet existing = petRepository.findPetById(petId);
+            String petProfileImagePath = petUpdateRequest.profileImagePath()==null || petUpdateRequest.profileImagePath().isEmpty() ?
+                    existing.getProfileImagePath() : uploadImageToS3(petUpdateRequest.profileImagePath());
+            // 1. 기존 멍냥이 정보 수정
+            pet = Pet.builder()
+                    .id(petId)
+                    .userId(userId)
+                    .name(petUpdateRequest.name())
+                    .breed(petUpdateRequest.breed())
+                    .birthDate(petUpdateRequest.birthDate())
+                    .gender(petUpdateRequest.gender())
+                    .weight(petUpdateRequest.weight())
+                    .shape(petUpdateRequest.shape())
+                    .allergic(petUpdateRequest.allergic())
+                    .profileImagePath(petProfileImagePath)
+                    .representative(petUpdateRequest.representative())
+                    .build();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         petRepository.updatePet(pet);
 
         // 2. 기존 알러지 / 건강 관심사 초기화 후 새로 등록 (N:1 관계 갱신 시 삭제 후 재삽입이 가장 단순함)
@@ -118,7 +152,7 @@ public class PetServiceImpl implements PetService{
     }
 
     @Override
-    public void deletePetdata(Long userId, Long petId) {
-        petRepository.deletePetdata(userId,petId);
+    public void deletePetData(Long userId, Long petId) {
+        petRepository.deletePetData(userId,petId);
     }
 }

@@ -7,11 +7,11 @@
     <insert id="insertPet" parameterType="com.ssafy.meongnyang.api.pet.domain.Pet" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO pet (
             user_id,name,breed,birth_date,gender,
-            weight,shape,is_allergic,profile_image_url
+            weight,shape,is_allergic, is_representative, profile_image_path
         )
         VALUES(
-            #{userId}, #{name}, #{breed}, #{birthDate}, #{gender},
-            #{weight}, #{shape}, #{isAllergic}, #{profileImageUrl}
+            #{userId},#{name}, #{breed}, #{birthDate}, #{gender},
+            #{weight}, #{shape}, #{allergic}, #{representative}, #{profileImagePath}
         )
     </insert>
     <!--  알러지 등록  -->
@@ -58,8 +58,9 @@
         gender = #{gender},
         weight = #{weight},
         shape = #{shape},
-        is_allergic = #{isAllergic},
-        profile_image_url = #{profileImageUrl},
+        is_allergic = #{allergic},
+        profile_image_path = #{profileImagePath},
+        is_representative = #{representative},
         updated_at = CURRENT_TIMESTAMP
         WHERE id = #{id} AND user_id = #{userId}
     </update>
@@ -78,7 +79,7 @@
     </delete>
 
     <!--  petId로 멍냥 데이터 삭제  -->
-    <delete id="deletePetdata">
+    <delete id="deletePetData">
         DELETE FROM pet WHERE id = #{petId} and user_id = #{userId}
     </delete>
 </mapper>
