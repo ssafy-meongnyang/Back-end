@@ -9,11 +9,11 @@
         VALUES (#{name}, #{nickname}, #{username}, #{password}, #{phoneNumber}, #{email}, #{role}, #{profileImageUrl}, #{passwordUpdatedAt})
     </insert>
 
-    <select id="existsByUsername" parameterType="String" resultType="boolean">
+    <select id="existsByUsername" parameterType="String" resultType="int">
         SELECT EXISTS(SELECT 1 FROM users WHERE username = #{username})
     </select>
 
-    <select id="existsByNickname" parameterType="String" resultType="boolean">
+    <select id="existsByNickname" parameterType="String" resultType="int">
         SELECT EXISTS(SELECT 1 FROM users WHERE nickname = #{nickname})
     </select>
 

@@ -29,14 +29,14 @@ public class UserController {
     }
 
     // 아이디 중복 확인 API
-    @GetMapping("/check-username")
+    @GetMapping("/exists/username")
     public ApiResponseDto<Boolean> checkUsername(@RequestParam String username) {
         boolean isAvailable = !userService.existsByUsername(username);
         return ApiResponseDto.success(SuccessCode.CHECK_USERNAME_SUCCESS, isAvailable);
     }
 
     // 닉네임 중복 확인 API
-    @GetMapping("/check-nickname")
+    @GetMapping("/exists/nickname")
     public ApiResponseDto<Boolean> checkNickname(@RequestParam String nickname) {
         boolean isAvailable = !userService.existsByNickname(nickname);
         return ApiResponseDto.success(SuccessCode.CHECK_NICKNAME_SUCCESS, isAvailable);
