@@ -3,9 +3,12 @@ package com.ssafy.meongnyang.api.diet.service;
 import com.ssafy.meongnyang.api.diet.domain.Diet;
 import com.ssafy.meongnyang.api.diet.dto.request.DietRequest;
 import com.ssafy.meongnyang.api.diet.dto.response.DietListResponse;
+import com.ssafy.meongnyang.api.diet.dto.request.DietUpdateRequest;
 import com.ssafy.meongnyang.api.diet.dto.response.DietResponse;
 import com.ssafy.meongnyang.api.diet.repository.DietRepository;
+import com.ssafy.meongnyang.global.exception.CustomException;
 import com.ssafy.meongnyang.global.external.S3Service;
+import com.ssafy.meongnyang.global.response.enums.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -70,4 +73,54 @@ public class DietServiceImpl implements DietService {
     public DietResponse getDietDetail(Long userId, Long dietId) {
         return dietRepository.selectDietDetail(userId, dietId);
     }
+
+    @Override
+    public void updateDiet(Long userId, Long dietId, DietUpdateRequest dietUpdateRequest) {
+        try {
+
+            // 1. 기존 데이터 조회
+            DietResponse existing = dietRepository.selectDietDetail(userId, dietId);
+            if (existing == null) {
+                throw new CustomException(ErrorCode.NOT_FOUND_DIET);
+            }
+
+            // 2. 새 이미지가 있으면 업로드, 없으면 기존 경로 유지
+            String breakfastPath = dietUpdateRequest.getBreakfastImg() != null && !dietUpdateRequest.getBreakfastImg().isEmpty()
+                    ? uploadImageToS3(dietUpdateRequest.getBreakfastImg())
+                    : existing.breakfastImg();
+
+            String lunchPath = dietUpdateRequest.getLunchImg() != null && !dietUpdateRequest.getLunchImg().isEmpty()
+                    ? uploadImageToS3(dietUpdateRequest.getLunchImg())
+                    : existing.lunchImg();
+
+            String dinnerPath = dietUpdateRequest.getDinnerImg() != null && !dietUpdateRequest.getDinnerImg().isEmpty()
+                    ? uploadImageToS3(dietUpdateRequest.getDinnerImg())
+                    : existing.dinnerImg();
+
+
+            // 3. Diet 객체로 변환
+            Diet updated = Diet.builder()
+                    .dietId(dietId)
+                    .userId(userId)
+                    .date(dietUpdateRequest.getDate())
+                    .title(dietUpdateRequest.getTitle())
+                    .breakfastImgPath(breakfastPath)
+                    .breakfastDes(dietUpdateRequest.getBreakfastDes())
+                    .lunchImgPath(lunchPath)
+                    .lunchDes(dietUpdateRequest.getLunchDes())
+                    .dinnerImgPath(dinnerPath)
+                    .dinnerDes(dietUpdateRequest.getDinnerDes())
+                    .snack(dietUpdateRequest.getSnack())
+                    .memo(dietUpdateRequest.getMemo())
+                    .exercise(dietUpdateRequest.getExercise())
+                    .build();
+
+            // 4. 업데이트 수행
+            dietRepository.updateDiet(updated);
+
+        } catch (IOException e) {
+            throw new RuntimeException("식단 이미지 업로드 중 오류 발생: " + e.getMessage());
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ package com.ssafy.meongnyang.api.diet.controller;
 import com.ssafy.meongnyang.api.auth.security.CustomUserDetails;
 import com.ssafy.meongnyang.api.diet.domain.Diet;
 import com.ssafy.meongnyang.api.diet.dto.request.DietRequest;
+import com.ssafy.meongnyang.api.diet.dto.request.DietUpdateRequest;
 import com.ssafy.meongnyang.api.diet.dto.response.DietListResponse;
 import com.ssafy.meongnyang.api.diet.service.DietService;
 import com.ssafy.meongnyang.global.response.ApiResponseDto;
@@ -42,6 +43,13 @@ public class DietController {
         Long userId = userDetails.getUser().getId();
         dietService.getDietDetail(userId, dietId);
         return ApiResponseDto.success(SuccessCode.DIET_GET_DETAIL_SUCCESS);
+    }
 
+    // 식단 수정하기
+    @PostMapping("/{dietId}")
+    public ApiResponseDto<?> updateDiet(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long dietId, @ModelAttribute DietUpdateRequest dietUpdateRequest){
+        Long userId = userDetails.getUser().getId();
+        dietService.updateDiet(userId,dietId, dietUpdateRequest);
+        return ApiResponseDto.success(SuccessCode.DIET_UPDATE_SUCCESS);
     }
 }
