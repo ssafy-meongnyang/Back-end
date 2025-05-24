@@ -21,14 +21,14 @@ public class PetController {
 
     private final PetService petService;
 
-    // 멍냥이 등록
+    // 멍냥이 등록하기
     @PostMapping("")
-    public ApiResponseDto<PetRequest> registerPet(@RequestBody @Valid PetRequest petRequest,
+    public ApiResponseDto<PetRequest> registerPet(@ModelAttribute PetRequest petRequest,
                                                   @AuthenticationPrincipal CustomUserDetails userDetails){
 
         Long userId = userDetails.getUser().getId();
         petService.registerPet(userId,petRequest);
-        return ApiResponseDto.success(SuccessCode.PET_REGISTER_SUCCESS,petRequest);
+        return ApiResponseDto.success(SuccessCode.PET_REGISTER_SUCCESS);
     }
 
     // 멍냥이 목록 조회

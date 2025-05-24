@@ -7,11 +7,11 @@
     <insert id="insertPet" parameterType="com.ssafy.meongnyang.api.pet.domain.Pet" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO pet (
             user_id,name,breed,birth_date,gender,
-            weight,shape,is_allergic,profile_image_url
+            weight,shape,is_allergic, is_representative, profile_image_path
         )
         VALUES(
-            #{userId}, #{name}, #{breed}, #{birthDate}, #{gender},
-            #{weight}, #{shape}, #{isAllergic}, #{profileImageUrl}
+            #{userId},#{name}, #{breed}, #{birthDate}, #{gender},
+            #{weight}, #{shape}, #{allergic}, #{representative}, #{profileImagePath}
         )
     </insert>
     <!--  알러지 등록  -->
