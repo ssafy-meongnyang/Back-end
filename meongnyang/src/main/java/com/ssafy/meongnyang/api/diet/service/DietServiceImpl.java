@@ -30,10 +30,9 @@ public class DietServiceImpl implements DietService {
     public void createDiet(Long userId, DietRequest dietRequest) {
         try {
             // 1. 이미지 파일을 S3에 업로드
-            String breakfastPath = uploadImageToS3(dietRequest.getBreakfastImg());
-            String lunchPath = uploadImageToS3(dietRequest.getLunchImg());
-            String dinnerPath = uploadImageToS3(dietRequest.getDinnerImg());
-
+            String breakfastPath = uploadImageToS3(dietRequest.getBreakfastImgPath());
+            String lunchPath = uploadImageToS3(dietRequest.getLunchImgPath());
+            String dinnerPath = uploadImageToS3(dietRequest.getDinnerImgPath());
             // 2. DTO → 도메인 객체 변환
             Diet diet = Diet.builder()
                     .userId(userId)
@@ -49,7 +48,7 @@ public class DietServiceImpl implements DietService {
                     .memo(dietRequest.getMemo())
                     .exercise(dietRequest.getExercise())
                     .build();
-
+            System.out.println(diet);
             // 3. DB에 저장
             dietRepository.insertDiet(diet);
 
