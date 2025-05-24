@@ -10,9 +10,9 @@ import java.util.List;
 public interface BoardService {
     void createBoard(BoardCreateRequest boardCreateRequest, Long userId);
     List<BoardListGetResponse> getBoardList();
-    BoardGetResponse getBoardById(int boardId);
-    void updateBoard(BoardUpdateRequest boardUpdateRequest, int boardId);
-    Board getBoard(int boardId);
-    void deleteBoard(int boardId);
+    BoardGetResponse getBoardById(Long boardId);
+    void updateBoard(BoardUpdateRequest boardUpdateRequest, Long boardId);
+    Board getBoard(Long boardId);
+    void deleteBoard(Long boardId);
     List<BoardListGetResponse> searchBoard(String writer, String title, String content);
 }

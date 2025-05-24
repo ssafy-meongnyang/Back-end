@@ -10,9 +10,9 @@ import org.apache.ibatis.annotations.Mapper;
 public interface BoardRepository {
     void insertBoard(Board board);
     List<BoardListGetResponse> getBoardListWithUser();
-    BoardGetResponse getBoardById(int boardId);
+    BoardGetResponse getBoardById(Long boardId);
     void updateBoard(Board board);
-    Board getBoard(int boardId);
-    void deleteBoard(int boardId);
+    Board getBoard(Long boardId);
+    void deleteBoard(Long boardId);
     List<BoardListGetResponse> searchBoard(String writer, String title, String content);
 }

@@ -21,16 +21,27 @@ public class BoardServiceImpl implements BoardService {
 
     private static final String BOARD_FILE_PATH = "board_file/";
     private static final String BUCKET_PATH = "https://meongnyang-ssafy.s3.ap-northeast-2.amazonaws.com/";
+
     public void createBoard(BoardCreateRequest boardCreateRequest, Long userId) {
         try {
-            Board board = Board.builder()
-                    .category(boardCreateRequest.category())
-                    .userId(userId)
-                    .title(boardCreateRequest.title())
-                    .content(boardCreateRequest.content())
-                    .imageUrl(BUCKET_PATH + s3Service.uploadImage(BOARD_FILE_PATH, boardCreateRequest.image()))
-                    .build();
-            boardRepository.insertBoard(board);
+            if (boardCreateRequest.image() != null) {
+                Board board = Board.builder()
+                        .category(boardCreateRequest.category())
+                        .userId(userId)
+                        .title(boardCreateRequest.title())
+                        .content(boardCreateRequest.content())
+                        .imageUrl(BUCKET_PATH + s3Service.uploadImage(BOARD_FILE_PATH, boardCreateRequest.image()))
+                        .build();
+                boardRepository.insertBoard(board);
+            } else {
+                Board board = Board.builder()
+                        .category(boardCreateRequest.category())
+                        .userId(userId)
+                        .title(boardCreateRequest.title())
+                        .content(boardCreateRequest.content())
+                        .build();
+                boardRepository.insertBoard(board);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -40,11 +51,11 @@ public class BoardServiceImpl implements BoardService {
         return boardRepository.getBoardListWithUser();
     }
 
-    public BoardGetResponse getBoardById(int boardId) {
+    public BoardGetResponse getBoardById(Long boardId) {
         return boardRepository.getBoardById(boardId);
     }
 
-    public void updateBoard(BoardUpdateRequest boardUpdateRequest, int boardId){
+    public void updateBoard(BoardUpdateRequest boardUpdateRequest, Long boardId) {
         Board board = boardRepository.getBoard(boardId);
         board.setCategory(boardUpdateRequest.category());
         board.setTitle(boardUpdateRequest.title());
@@ -56,7 +67,7 @@ public class BoardServiceImpl implements BoardService {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        } else if(boardUpdateRequest.isDeleted() && boardUpdateRequest.image() == null){
+        } else if (boardUpdateRequest.isDeleted() && boardUpdateRequest.image() == null) {
             // 이미지가 전달되지 않았을 때 기존 이미지 URL 유지
             board.setImageUrl(null);
         } else {
@@ -65,11 +76,11 @@ public class BoardServiceImpl implements BoardService {
         boardRepository.updateBoard(board);
     }
 
-    public Board getBoard(int boardId){
+    public Board getBoard(Long boardId) {
         return boardRepository.getBoard(boardId);
     }
 
-    public void deleteBoard(int boardId){
+    public void deleteBoard(Long boardId) {
         boardRepository.deleteBoard(boardId);
     }
 

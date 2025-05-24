@@ -15,7 +15,7 @@
         u.nickname AS username,
         b.created_at
         FROM board b
-        JOIN user u ON b.user_id = u.id
+        JOIN users u ON b.user_id = u.id
     </select>
 
     <select id="getBoardById" resultType="com.ssafy.meongnyang.api.board.dto.response.BoardGetResponse">
@@ -23,12 +23,13 @@
         b.category,
         b.title,
         u.nickname AS nickname,
-        u.image_url AS profileImageUrl,
+        u.profile_image_url AS profileImageUrl,
         DATE_FORMAT(b.created_at, '%Y-%m-%d') AS date,
         b.content,
         b.image_url
         FROM board b
-        JOIN user u ON b.user_id = u.id
+        JOIN users u ON b.user_id = u.id
+        WHERE b.id = #{boardId}
     </select>
 
     <select id="getBoard" resultType="com.ssafy.meongnyang.api.board.domain.Board">
@@ -49,7 +50,7 @@
     </update>
 
 
-    <delete id="deleteBoard" parameterType="int">
+    <delete id="deleteBoard" parameterType="Long">
         DELETE FROM board
         WHERE id = #{boardId}
     </delete>
