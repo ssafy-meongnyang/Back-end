@@ -52,7 +52,7 @@ public class UserController {
 
     // 비밀번호 변경하기 API
     @PutMapping("/password")
-    public ApiResponseDto<Boolean> changePassword(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody @Valid PasswordRequest passwordRequest){
+    public ApiResponseDto<?> changePassword(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody @Valid PasswordRequest passwordRequest){
         String username = customUserDetails.getUsername();
         userService.changePassword(username, passwordRequest);
         return ApiResponseDto.success(SuccessCode.USER_UPDATE_PASSWORD_SUCCESS);
