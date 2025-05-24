@@ -15,4 +15,5 @@ public interface DietService {
     List<DietListResponse> getDietList(Long userId);
     DietResponse getDietDetail(Long userId, Long dietId);
     void updateDiet(Long userId, Long dietId, DietUpdateRequest dietUpdateRequest);
+    void deleteDiet(Long userId, Long dietId);
 }

@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -121,6 +120,11 @@ public class DietServiceImpl implements DietService {
         } catch (IOException e) {
             throw new RuntimeException("식단 이미지 업로드 중 오류 발생: " + e.getMessage());
         }
+    }
+
+    @Override
+    public void deleteDiet(Long userId, Long dietId) {
+        dietRepository.deleteDiet(userId,dietId);
     }
 
 }
