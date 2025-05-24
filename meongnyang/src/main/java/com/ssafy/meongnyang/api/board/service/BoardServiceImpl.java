@@ -49,10 +49,18 @@ public class BoardServiceImpl implements BoardService {
         board.setCategory(boardUpdateRequest.category());
         board.setTitle(boardUpdateRequest.title());
         board.setContent(boardUpdateRequest.content());
-        try {
-            board.setImageUrl(BUCKET_PATH+ s3Service.uploadImage(BOARD_FILE_PATH, boardUpdateRequest.image()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (boardUpdateRequest.image() != null && !boardUpdateRequest.image().isEmpty()) {
+            try {
+                String uploadedUrl = BUCKET_PATH + s3Service.uploadImage(BOARD_FILE_PATH, boardUpdateRequest.image());
+                board.setImageUrl(uploadedUrl);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if(boardUpdateRequest.isDeleted() && boardUpdateRequest.image() == null){
+            // 이미지가 전달되지 않았을 때 기존 이미지 URL 유지
+            board.setImageUrl(null);
+        } else {
+            board.setImageUrl(board.getImageUrl());
         }
         boardRepository.updateBoard(board);
     }

@@ -37,13 +37,17 @@
     </select>
 
     <update id="updateBoard" parameterType="com.ssafy.meongnyang.api.board.domain.Board">
-        UPDATE board SET
+        UPDATE board
+        SET
         category = #{category},
         title = #{title},
-        content = #{content},
-        image_url = #{imageUrl}
+        content = #{content}
+        <if test="imageUrl != null">
+            , image_url = #{imageUrl}
+        </if>
         WHERE id = #{id}
     </update>
+
 
     <delete id="deleteBoard" parameterType="int">
         DELETE FROM board
