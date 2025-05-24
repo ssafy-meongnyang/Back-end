@@ -111,20 +111,31 @@ public class PetServiceImpl implements PetService{
 
     @Override
     public void updatePetInfo(Long userId, Long petId, PetUpdateRequest petUpdateRequest) {
-        // 1. 기존 멍냥이 정보 수정
-        Pet pet = Pet.builder()
-                .id(petId)
-                .userId(userId)
-                .name(petUpdateRequest.name())
-                .breed(petUpdateRequest.breed())
-                .birthDate(petUpdateRequest.birthDate())
-                .gender(petUpdateRequest.gender())
-                .weight(petUpdateRequest.weight())
-                .shape(petUpdateRequest.shape())
-                .allergic(petUpdateRequest.isAllergic())
-                .profileImagePath(petUpdateRequest.profileImageUrl())
-                .build();
-
+        Pet pet = null;
+        try {
+            // 0. 파일 이미지 존재여부 확인
+            // null인 경우 : 기존 이미지 그대로 유지
+            // isEmpty인 경우 :  사진 미선택 -> 기존 이미지 그대로 유지
+            Pet existing = petRepository.findPetById(petId);
+            String petProfileImagePath = petUpdateRequest.profileImagePath()==null || petUpdateRequest.profileImagePath().isEmpty() ?
+                    existing.getProfileImagePath() : uploadImageToS3(petUpdateRequest.profileImagePath());
+            // 1. 기존 멍냥이 정보 수정
+            pet = Pet.builder()
+                    .id(petId)
+                    .userId(userId)
+                    .name(petUpdateRequest.name())
+                    .breed(petUpdateRequest.breed())
+                    .birthDate(petUpdateRequest.birthDate())
+                    .gender(petUpdateRequest.gender())
+                    .weight(petUpdateRequest.weight())
+                    .shape(petUpdateRequest.shape())
+                    .allergic(petUpdateRequest.allergic())
+                    .profileImagePath(petProfileImagePath)
+                    .representative(petUpdateRequest.representative())
+                    .build();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         petRepository.updatePet(pet);
 
         // 2. 기존 알러지 / 건강 관심사 초기화 후 새로 등록 (N:1 관계 갱신 시 삭제 후 재삽입이 가장 단순함)

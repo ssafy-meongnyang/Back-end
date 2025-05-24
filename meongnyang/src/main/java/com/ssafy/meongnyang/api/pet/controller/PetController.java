@@ -48,7 +48,7 @@ public class PetController {
     @PatchMapping("/{petId}")
     public ApiResponseDto<?> updatePetInfo(
             @PathVariable Long petId,
-            @RequestBody PetUpdateRequest petUpdateRequest,
+            @ModelAttribute PetUpdateRequest petUpdateRequest,
             @AuthenticationPrincipal CustomUserDetails userDetails
             ){
         Long userId = userDetails.getUser().getId();

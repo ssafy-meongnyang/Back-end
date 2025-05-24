@@ -58,8 +58,9 @@
         gender = #{gender},
         weight = #{weight},
         shape = #{shape},
-        is_allergic = #{isAllergic},
-        profile_image_url = #{profileImageUrl},
+        is_allergic = #{allergic},
+        profile_image_path = #{profileImagePath},
+        is_representative = #{representative},
         updated_at = CURRENT_TIMESTAMP
         WHERE id = #{id} AND user_id = #{userId}
     </update>

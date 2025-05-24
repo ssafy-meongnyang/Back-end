@@ -1,5 +1,8 @@
 package com.ssafy.meongnyang.api.pet.dto.request;
 
+import jakarta.annotation.Nullable;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -10,8 +13,9 @@ public record PetUpdateRequest(
         String gender,
         Integer weight,
         String shape,
-        Boolean isAllergic,
-        String profileImageUrl,
+        Boolean allergic,
+        MultipartFile profileImagePath,
+        Boolean representative,
         List<String> allergens,
         List<String> healthConcerns
 ) {
