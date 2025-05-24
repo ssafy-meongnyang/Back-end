@@ -5,6 +5,7 @@ import com.ssafy.meongnyang.api.diet.domain.Diet;
 import com.ssafy.meongnyang.api.diet.dto.request.DietRequest;
 import com.ssafy.meongnyang.api.diet.dto.request.DietUpdateRequest;
 import com.ssafy.meongnyang.api.diet.dto.response.DietListResponse;
+import com.ssafy.meongnyang.api.diet.dto.response.DietResponse;
 import com.ssafy.meongnyang.api.diet.service.DietService;
 import com.ssafy.meongnyang.global.response.ApiResponseDto;
 import com.ssafy.meongnyang.global.response.enums.SuccessCode;
@@ -34,15 +35,15 @@ public class DietController {
     public ApiResponseDto<?> getDietList(@AuthenticationPrincipal CustomUserDetails userDetails) {
         Long userId = userDetails.getUser().getId();
         List<DietListResponse> dietList = dietService.getDietList(userId); // DietListResponse로 수정 필요
-        return ApiResponseDto.success(SuccessCode.DIET_LIST_GET_SUCCESS);
+        return ApiResponseDto.success(SuccessCode.DIET_LIST_GET_SUCCESS,dietList);
     }
 
     // 식단 상세 조회하기
     @GetMapping("/{dietId}")
     public ApiResponseDto<?> getDietDetail(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long dietId){
         Long userId = userDetails.getUser().getId();
-        dietService.getDietDetail(userId, dietId);
-        return ApiResponseDto.success(SuccessCode.DIET_GET_DETAIL_SUCCESS);
+        DietResponse dietResponse = dietService.getDietDetail(userId, dietId);
+        return ApiResponseDto.success(SuccessCode.DIET_GET_DETAIL_SUCCESS,dietResponse);
     }
 
     // 식단 수정하기

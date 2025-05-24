@@ -1,7 +1,5 @@
 package com.ssafy.meongnyang.api.diet.dto.response;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import java.time.LocalDate;
 
 public record DietResponse (
