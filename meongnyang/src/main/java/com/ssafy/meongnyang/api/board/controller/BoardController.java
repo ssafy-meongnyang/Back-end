@@ -43,20 +43,20 @@ public class BoardController {
 
     //게시물 상세 조회
     @GetMapping("/board/{boardId}")
-    public ApiResponseDto<BoardGetResponse> getBoard(@PathVariable int boardId) {
+    public ApiResponseDto<BoardGetResponse> getBoard(@PathVariable Long boardId) {
         return ApiResponseDto.success(SuccessCode.BOARD_GET_SUCCESS, boardServiceImpl.getBoardById(boardId));
     }
 
     //게시물 수정
     @PatchMapping("/board/{boardId}")
-    public ApiResponseDto updateBoard(@ModelAttribute BoardUpdateRequest boardUpdateRequest, @PathVariable int boardId){
+    public ApiResponseDto updateBoard(@ModelAttribute BoardUpdateRequest boardUpdateRequest, @PathVariable Long boardId){
         boardServiceImpl.updateBoard(boardUpdateRequest, boardId);
         return ApiResponseDto.success(SuccessCode.BOARD_UPDATE_SUCCESS);
     }
 
     //게시물 삭제
     @DeleteMapping("/board/{boardId}")
-    public ApiResponseDto deleteBoard(@PathVariable int boardId) {
+    public ApiResponseDto deleteBoard(@PathVariable Long boardId) {
         boardServiceImpl.deleteBoard(boardId);
         return ApiResponseDto.success(SuccessCode.BOARD_DELETE_SUCCESS);
     }

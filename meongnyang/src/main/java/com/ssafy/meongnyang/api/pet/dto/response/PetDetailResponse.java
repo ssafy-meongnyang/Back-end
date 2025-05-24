@@ -13,7 +13,7 @@ public record PetDetailResponse(
         String shape,
         Boolean isAllergic,
         String profileImageUrl,
-        Boolean isRepresentative,
+        boolean isRepresentative,
         List<String> allergens,
         List<String> healthConcerns
 ) {

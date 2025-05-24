@@ -19,7 +19,7 @@ public class Pet {
     private String shape;
     private Boolean isAllergic;
     private String profileImageUrl;
-    private Boolean isRepresentative;
+    private boolean isRepresentative;
     private String createdAt;
     private String updatedAt;
 }
