@@ -57,10 +57,7 @@ public class UserServiceImpl implements UserService {
         userRepository.insertUser(user);
     }
     @Override
-    public boolean existsByUsername(String username) {
-        System.out.println(userRepository.existsByUsername(username));
-        return userRepository.existsByUsername(username) == 1;
-    }
+    public boolean existsByUsername(String username) { return userRepository.existsByUsername(username) == 1; }
 
     @Override
     public boolean existsByNickname(String nickname) {
