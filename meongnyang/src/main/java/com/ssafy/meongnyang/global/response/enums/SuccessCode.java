@@ -34,6 +34,7 @@ public enum SuccessCode {
     DIET_LIST_GET_SUCCESS(200,HttpStatus.OK,"식단 전체 조회 성공"),
     DIET_GET_DETAIL_SUCCESS(200,HttpStatus.OK,"식단 상세 조회 성공"),
     DIET_UPDATE_SUCCESS(200,HttpStatus.OK,"식단 수정 성공"),
+    DIET_DELETE_SUCCESS(200,HttpStatus.OK,"식단 삭제 성공"),
     AI_SUCCESS(200, HttpStatus.OK, "AI 응답 성공"),
 
     //201 CREATED

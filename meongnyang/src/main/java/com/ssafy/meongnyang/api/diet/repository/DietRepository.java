@@ -16,4 +16,5 @@ public interface DietRepository {
     List<DietListResponse> selectDietListByUserId(Long userId);
     DietResponse selectDietDetail(@Param("userId") Long userId, @Param("dietId") Long dietId);
     void updateDiet(Diet updated);
+    void deleteDiet(@Param("userId") Long userId, @Param("dietId") Long dietId);
 }

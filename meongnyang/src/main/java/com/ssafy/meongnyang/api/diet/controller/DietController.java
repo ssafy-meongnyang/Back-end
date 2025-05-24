@@ -52,4 +52,12 @@ public class DietController {
         dietService.updateDiet(userId,dietId, dietUpdateRequest);
         return ApiResponseDto.success(SuccessCode.DIET_UPDATE_SUCCESS);
     }
+
+    // 식단 삭제하기
+    @DeleteMapping("/{dietId}")
+    public ApiResponseDto<?> deleteDiet(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long dietId){
+        Long userId = userDetails.getUser().getId();
+        dietService.deleteDiet(userId,dietId);
+        return ApiResponseDto.success(SuccessCode.DIET_DELETE_SUCCESS);
+    }
 }

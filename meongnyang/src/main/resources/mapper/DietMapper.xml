@@ -63,4 +63,9 @@
         WHERE diet_id = #{dietId}
         AND user_id = #{userId}
     </update>
+    <delete id="deleteDiet">
+        DELETE FROM diet
+        WHERE user_id = #{userId}
+        AND diet_id = #{dietId}
+    </delete>
 </mapper>
