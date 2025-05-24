@@ -13,6 +13,6 @@ public interface UserService {
     boolean existsByNickname(String nickname);
     UserResponse getMyInfo(String username);
     void changePassword(String username, PasswordRequest passwordRequest);
-    UserResponse updateMyInfo(String username, UserUpdateRequest request);
-    void deleteMyAccount(String username);
+    void updateMyInfo(String username, UserUpdateRequest userUpdateRequest);
+    void deleteMyAccount(Long userId);
 }

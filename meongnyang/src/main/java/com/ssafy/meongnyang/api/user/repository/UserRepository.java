@@ -23,5 +23,5 @@ public interface UserRepository {
     
     // username으로 사용자 정보 수정
     int updateUser(User user);
-    int deleteUser(String username);
+    void deleteUser(Long userId);
 }
