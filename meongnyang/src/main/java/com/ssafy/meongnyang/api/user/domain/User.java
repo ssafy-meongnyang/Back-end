@@ -22,6 +22,6 @@ public class User{
     private String phoneNumber; // 휴대폰 번호
     private String email; // 이메일
     private String role; // 역할
-    private String profileImageUrl; // 프로필 이미지 
+    private String profileImagePath; // 프로필 이미지
     private LocalDate passwordUpdatedAt; // 비밀번호 업데이트 시간
 }

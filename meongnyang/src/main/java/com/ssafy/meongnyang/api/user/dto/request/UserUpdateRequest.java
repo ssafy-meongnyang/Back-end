@@ -3,6 +3,7 @@ package com.ssafy.meongnyang.api.user.dto.request;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import org.springframework.web.multipart.MultipartFile;
 
 public record UserUpdateRequest (
     @NotBlank(message = "닉네임은 필수 입력 항목입니다.")
@@ -14,7 +15,7 @@ public record UserUpdateRequest (
 
     @NotBlank(message = "휴대폰 번호는 필수 입력 항목입니다.")
     @Pattern(regexp = "^010\\d{8}$")
-    String phonenumber,
+    String phoneNumber,
 
-    String profileImageUrl
+    MultipartFile profileImagePath
 ){ }

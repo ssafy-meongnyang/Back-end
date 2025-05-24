@@ -61,19 +61,19 @@ public class UserController {
     // 내정보 수정하기 API
     @PatchMapping("/me")
     public ApiResponseDto<?> updateMyInfo(
-            @RequestBody @Valid UserUpdateRequest request,
+            @ModelAttribute UserUpdateRequest userUpdateRequest,
             @AuthenticationPrincipal CustomUserDetails customUserDetails
             ){
         String username = customUserDetails.getUsername();
-        UserResponse response = userService.updateMyInfo(username,request);
-        return ApiResponseDto.success(SuccessCode.USER_UPDATE_MY_INFO_SUCCESS,response);
+        userService.updateMyInfo(username,userUpdateRequest);
+        return ApiResponseDto.success(SuccessCode.USER_UPDATE_MY_INFO_SUCCESS);
     }
 
     // 회원 탈퇴 API
     @DeleteMapping("/me")
     public ApiResponseDto<?> deleteMyAccount( @AuthenticationPrincipal CustomUserDetails customUserDetails){
-        String username = customUserDetails.getUsername();
-        userService.deleteMyAccount(username);
+        Long userId = customUserDetails.getUser().getId();
+        userService.deleteMyAccount(userId);
         return ApiResponseDto.success(SuccessCode.USER_DELETE_SUCCESS);
     }
 }
