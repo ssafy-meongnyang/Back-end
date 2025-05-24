@@ -58,8 +58,7 @@ public class PetServiceImpl implements PetService{
                     pet.getBirthDate(),
                     pet.getWeight(),
                     pet.getProfileImageUrl(),
-                    pet.getIsRepresentative(),
-
+                    pet.isRepresentative(),
                     concerns
             );
         }).toList();
@@ -81,7 +80,7 @@ public class PetServiceImpl implements PetService{
                 pet.getShape(),
                 pet.getIsAllergic(),
                 pet.getProfileImageUrl(),
-                pet.getIsRepresentative(),
+                pet.isRepresentative(),
                 allergens,
                 concerns
         );

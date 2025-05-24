@@ -10,6 +10,7 @@ public record PetListResponse(
         LocalDate birthDate,
         Integer weight,
         String profileImageUrl,
-        Boolean isRepresentative,
+        boolean isRepresentative,
         List<String> healthConcerns
-) {}
+) {
+}
