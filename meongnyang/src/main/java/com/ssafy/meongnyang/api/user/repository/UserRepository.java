@@ -9,8 +9,8 @@ import org.apache.ibatis.annotations.Param;
 public interface UserRepository {
     // 회원 가입
     void insertUser(User user); // 회원 저장
-    boolean existsByUsername(String username); // username(아이디) 중복 확인
-    boolean existsByNickname(String nickname); // nickname 중복 확인
+    int existsByUsername(String username); // username(아이디) 중복 확인
+    int existsByNickname(String nickname); // nickname 중복 확인
 
     // 로그인
     User findByUsername(String username);

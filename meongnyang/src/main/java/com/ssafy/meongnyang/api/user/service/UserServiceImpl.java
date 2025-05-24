@@ -27,12 +27,12 @@ public class UserServiceImpl implements UserService {
     public void register(SignUpRequest signUpRequest) {
 
         // 1. 아이디 중복 확인
-        if (userRepository.existsByUsername(signUpRequest.username())) {
+        if (userRepository.existsByUsername(signUpRequest.username())==1) {
             throw new CustomException(ErrorCode.DUPLICATION_USER_USERNAME);
         }
 
         // 2. 닉네임 중복 확인
-        if (userRepository.existsByNickname(signUpRequest.nickname())) {
+        if (userRepository.existsByNickname(signUpRequest.nickname())==1) {
             throw new CustomException(ErrorCode.DUPLICATION_USER_NICKNAME);
         }
 
@@ -58,12 +58,13 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public boolean existsByUsername(String username) {
-        return userRepository.existsByUsername(username);
+        System.out.println(userRepository.existsByUsername(username));
+        return userRepository.existsByUsername(username) == 1;
     }
 
     @Override
     public boolean existsByNickname(String nickname) {
-        return userRepository.existsByNickname(nickname);
+        return userRepository.existsByNickname(nickname)==1;
     }
 
     @Override
