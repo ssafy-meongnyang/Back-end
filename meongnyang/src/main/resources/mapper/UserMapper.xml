@@ -6,14 +6,14 @@
 
     <insert id="insertUser" parameterType="com.ssafy.meongnyang.api.user.domain.User">
         INSERT INTO users (name, nickname, username, password, phonenumber, email, role, profile_image_url, password_updated_at)
-        VALUES (#{name}, #{nickname}, #{username}, #{password}, #{phonenumber}, #{email}, #{role}, #{profileImageUrl}, #{passwordUpdatedAt})
+        VALUES (#{name}, #{nickname}, #{username}, #{password}, #{phoneNumber}, #{email}, #{role}, #{profileImageUrl}, #{passwordUpdatedAt})
     </insert>
 
-    <select id="existsByUsername" parameterType="String" resultType="boolean">
+    <select id="existsByUsername" parameterType="String" resultType="int">
         SELECT EXISTS(SELECT 1 FROM users WHERE username = #{username})
     </select>
 
-    <select id="existsByNickname" parameterType="String" resultType="boolean">
+    <select id="existsByNickname" parameterType="String" resultType="int">
         SELECT EXISTS(SELECT 1 FROM users WHERE nickname = #{nickname})
     </select>
 
@@ -36,13 +36,13 @@
         UPDATE users
         SET nickname = #{nickname},
         email = #{email},
-        phonenumber = #{phonenumber},
-        profile_image_url = #{profileImageUrl}
+        phonenumber = #{phoneNumber},
+        profile_image_path = #{profileImagePath}
         WHERE username= #{username}
     </update>
 
-    <delete id="deleteUser" parameterType="string">
+    <delete id="deleteUser" parameterType="long">
         DELETE FROM users
-        WHERE username = #{username}
+        WHERE id = #{userId}
     </delete>
 </mapper>

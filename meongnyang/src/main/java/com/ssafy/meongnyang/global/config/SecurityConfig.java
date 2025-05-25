@@ -56,6 +56,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/api/v1/user/register",
+                                "/api/v1/user/exists/**",
                                 "/api/v1/user/password",
                                 "/api/v1/auth/**",
                                 "/images/**",   // 이미지 경로 허용

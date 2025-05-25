@@ -8,11 +8,14 @@ import com.ssafy.meongnyang.api.user.dto.request.UserUpdateRequest;
 import com.ssafy.meongnyang.api.user.dto.response.UserResponse;
 import com.ssafy.meongnyang.api.user.repository.UserRepository;
 import com.ssafy.meongnyang.global.exception.CustomException;
+import com.ssafy.meongnyang.global.external.S3Service;
 import com.ssafy.meongnyang.global.response.enums.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 @Service
@@ -22,34 +25,43 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PetRepository petRepository;
     private final PasswordEncoder passwordEncoder;
+    private final S3Service s3Service;
 
+    private static final String DEFAULT_PROFILE_IMAGE_URL = "http://localhost:8080/images/default-profile.png";
+    private static final String BUCKET_PATH = "https://meongnyang-ssafy.s3.ap-northeast-2.amazonaws.com/";
+    private static final String DIET_FILE_PATH = "pet_file/";
+
+    private String uploadImageToS3(MultipartFile file) throws IOException {
+        if (file == null || file.isEmpty()) return null;
+        return BUCKET_PATH + s3Service.uploadImage(DIET_FILE_PATH, file);
+    }
     @Override
-    public void register(SignUpRequest dto) {
+    public void register(SignUpRequest signUpRequest) {
 
         // 1. 아이디 중복 확인
-        if (userRepository.existsByUsername(dto.getUsername())) {
+        if (userRepository.existsByUsername(signUpRequest.username())==1) {
             throw new CustomException(ErrorCode.DUPLICATION_USER_USERNAME);
         }
 
         // 2. 닉네임 중복 확인
-        if (userRepository.existsByNickname(dto.getNickname())) {
+        if (userRepository.existsByNickname(signUpRequest.nickname())==1) {
             throw new CustomException(ErrorCode.DUPLICATION_USER_NICKNAME);
         }
 
         // 3. 비밀번호 암호화
-        String encodedPassword = passwordEncoder.encode(dto.getPassword());
+        String encodedPassword = passwordEncoder.encode(signUpRequest.password());
 
         // 4. 엔티티 변환
         String imageUrl = "http://localhost:8080/images/default-profile.png";
         User user = User.builder()
-                .username(dto.getUsername())
+                .username(signUpRequest.username())
                 .password(encodedPassword)
-                .name(dto.getName())
-                .nickname(dto.getNickname())
-                .email(dto.getEmail())
-                .phonenumber(dto.getPhonenumber())
+                .name(signUpRequest.name())
+                .nickname(signUpRequest.nickname())
+                .email(signUpRequest.email())
+                .phoneNumber(signUpRequest.phoneNumber())
                 .role("USER")              // 디폴트 역할
-                .profileImageUrl(imageUrl) // 디폴트 이미지
+                .profileImagePath(imageUrl) // 디폴트 이미지
                 .passwordUpdatedAt(LocalDate.now()) // 디폴트 패스워드 업데이트 시간
                 .build();
 
@@ -57,13 +69,11 @@ public class UserServiceImpl implements UserService {
         userRepository.insertUser(user);
     }
     @Override
-    public boolean existsByUsername(String username) {
-        return userRepository.existsByUsername(username);
-    }
+    public boolean existsByUsername(String username) { return userRepository.existsByUsername(username) == 1; }
 
     @Override
     public boolean existsByNickname(String nickname) {
-        return userRepository.existsByNickname(nickname);
+        return userRepository.existsByNickname(nickname)==1;
     }
 
     @Override
@@ -86,55 +96,35 @@ public class UserServiceImpl implements UserService {
         String encodedNewPassword = passwordEncoder.encode(passwordRequest.newPassword());
         
         // 비밀번호 업데이트
-        int result = userRepository.updatePassword(username, encodedNewPassword);
+        userRepository.updatePassword(username, encodedNewPassword);
     }
-    private static final String DEFAULT_PROFILE_IMAGE_URL = "http://localhost:8080/images/default-profile.png";
+
+
     @Override
-    public UserResponse updateMyInfo(String username, UserUpdateRequest request) {
+    public void updateMyInfo(String username, UserUpdateRequest userUpdateRequest) {
         User user = userRepository.findByUsername(username);
         if (user == null) {throw new CustomException(ErrorCode.USER_NOT_FOUND);}
 
-        user.setNickname(request.nickname());
-        user.setEmail(request.email());
-        user.setPhonenumber(request.phonenumber());
+        user.setNickname(userUpdateRequest.nickname());
+        user.setEmail(userUpdateRequest.email());
+        user.setPhoneNumber(userUpdateRequest.phoneNumber());
 
-
-        // 프로필 이미지가 null이면 기본 이미지로 설정
-        if (request.profileImageUrl() == null || request.profileImageUrl().isBlank()) {
-            user.setProfileImageUrl(DEFAULT_PROFILE_IMAGE_URL);
-        } else {
-            user.setProfileImageUrl(request.profileImageUrl());
+        // 프로필 이미지가 null이거나 isEmpty면 기본 이미지로 설정
+        String userProfileImagePath = null;
+        try {
+            userProfileImagePath = userUpdateRequest.profileImagePath() == null || userUpdateRequest.profileImagePath().isEmpty() ?
+                   DEFAULT_PROFILE_IMAGE_URL: uploadImageToS3(userUpdateRequest.profileImagePath());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-
+        user.setProfileImagePath(userProfileImagePath);
+        
         userRepository.updateUser(user);
-        return new UserResponse(
-                user.getNickname(),
-                user.getEmail(),
-                user.getPhonenumber(),
-                user.getProfileImageUrl(),
-                user.getPasswordUpdatedAt()
-        );
     }
 
     @Override
-    public void deleteMyAccount(String username) {
-
-        // 1. 유저 조회
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
-        }
-
-        Long userId = user.getId();
-
-        // 2. 자식 테이블부터 삭제 TODO : 주석 해제필요
-        petRepository.deletePetByUserId(userId);         // 반려동물 삭제
-//        dietRepository.deleteByUserId(userId);        // 식단 기록 삭제
-//        commentRepository.deleteByUserId(userId);     // 댓글 삭제
-//        postRepository.deleteByUserId(userId);        // 게시글 삭제
-
-        // 3. 유저 삭제
-        userRepository.deleteUser(username);
+    public void deleteMyAccount(Long userId) {
+        userRepository.deleteUser(userId);
     }
 
 }
