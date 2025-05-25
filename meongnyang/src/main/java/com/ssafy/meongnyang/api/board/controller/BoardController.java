@@ -4,6 +4,7 @@ import com.ssafy.meongnyang.api.board.dto.request.BoardCreateRequest;
 import com.ssafy.meongnyang.api.board.dto.request.BoardUpdateRequest;
 import com.ssafy.meongnyang.api.board.dto.response.BoardGetResponse;
 import com.ssafy.meongnyang.api.board.dto.response.BoardListGetResponse;
+import com.ssafy.meongnyang.api.board.dto.response.PageResponse;
 import com.ssafy.meongnyang.api.board.service.BoardServiceImpl;
 import com.ssafy.meongnyang.global.common.annotation.UserId;
 import com.ssafy.meongnyang.global.response.ApiResponseDto;
@@ -37,8 +38,10 @@ public class BoardController {
 
     //게시물 전체 리스트 조회
     @GetMapping("/board/list")
-    public ApiResponseDto<List<BoardListGetResponse>> getBoardList() {
-        return ApiResponseDto.success(SuccessCode.BOARD_LIST_GET_SUCCESS, boardServiceImpl.getBoardList());
+    public ApiResponseDto getBoardList(@RequestParam(defaultValue = "1") int page,
+                                                                   @RequestParam(defaultValue = "5") int size) {
+        PageResponse<BoardListGetResponse> boardList = boardServiceImpl.getBoardList(page, size);
+        return ApiResponseDto.success(SuccessCode.BOARD_LIST_GET_SUCCESS, boardList);
     }
 
     //게시물 상세 조회
