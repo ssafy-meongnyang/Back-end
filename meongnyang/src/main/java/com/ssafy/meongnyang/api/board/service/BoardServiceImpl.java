@@ -5,6 +5,7 @@ import com.ssafy.meongnyang.api.board.dto.request.BoardCreateRequest;
 import com.ssafy.meongnyang.api.board.dto.request.BoardUpdateRequest;
 import com.ssafy.meongnyang.api.board.dto.response.BoardGetResponse;
 import com.ssafy.meongnyang.api.board.dto.response.BoardListGetResponse;
+import com.ssafy.meongnyang.api.board.dto.response.PageResponse;
 import com.ssafy.meongnyang.api.board.repository.BoardRepository;
 import com.ssafy.meongnyang.global.external.S3Service;
 import java.io.IOException;
@@ -47,8 +48,16 @@ public class BoardServiceImpl implements BoardService {
         }
     }
 
-    public List<BoardListGetResponse> getBoardList() {
-        return boardRepository.getBoardListWithUser();
+    public PageResponse<BoardListGetResponse> getBoardList(int page, int size) {
+        int offset = (page - 1) * size;
+        List<BoardListGetResponse> boards = boardRepository.getBoardListWithUser(offset, size);
+        int total = boardRepository.getBoardCount();
+
+        return new PageResponse<>(boards, page, size, total);
+    }
+
+    public int getBoardCount() {
+        return boardRepository.getBoardCount();
     }
 
     public BoardGetResponse getBoardById(Long boardId) {

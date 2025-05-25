@@ -9,13 +9,15 @@
     </insert>
 
     <select id="getBoardListWithUser" resultType="com.ssafy.meongnyang.api.board.dto.response.BoardListGetResponse">
-        SELECT
-        b.category,
-        b.title,
-        u.nickname AS username,
-        b.created_at
+        SELECT b.category, b.title, u.nickname, b.created_at
         FROM board b
         JOIN users u ON b.user_id = u.id
+        ORDER BY b.created_at DESC
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+
+    <select id="getBoardCount" resultType="int">
+        SELECT COUNT(*) FROM board
     </select>
 
     <select id="getBoardById" resultType="com.ssafy.meongnyang.api.board.dto.response.BoardGetResponse">
