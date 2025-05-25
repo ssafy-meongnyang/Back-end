@@ -30,21 +30,21 @@ public class UserController {
 
     // 아이디 중복 확인 API
     @GetMapping("/exists/username")
-    public ApiResponseDto<Boolean> checkUsername(@RequestParam String username) {
+    public ApiResponseDto<?> checkUsername(@RequestParam String username) {
         boolean isAvailable = !userService.existsByUsername(username);
         return ApiResponseDto.success(SuccessCode.CHECK_USERNAME_SUCCESS, isAvailable);
     }
 
     // 닉네임 중복 확인 API
     @GetMapping("/exists/nickname")
-    public ApiResponseDto<Boolean> checkNickname(@RequestParam String nickname) {
+    public ApiResponseDto<?> checkNickname(@RequestParam String nickname) {
         boolean isAvailable = !userService.existsByNickname(nickname);
         return ApiResponseDto.success(SuccessCode.CHECK_NICKNAME_SUCCESS, isAvailable);
     }
 
     // 내 정보 보기 API
     @GetMapping("/me")
-    public ApiResponseDto<UserResponse> getMyInfo(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    public ApiResponseDto<?> getMyInfo(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         String username = customUserDetails.getUsername();
         UserResponse userResponse= userService.getMyInfo(username);
         return ApiResponseDto.success(SuccessCode.USER_GET_INFO_SUCCESS, userResponse);
