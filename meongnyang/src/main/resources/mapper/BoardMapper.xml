@@ -38,6 +38,7 @@
         b.category,
         b.title,
         u.nickname AS nickname,
+        b.user_id,
         u.profile_image_path AS profileImageUrl,
         DATE_FORMAT(b.created_at, '%Y-%m-%d') AS date,
         b.content,

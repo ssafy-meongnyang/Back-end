@@ -1,5 +1,6 @@
 package com.ssafy.meongnyang.api.board.controller;
 
+import com.ssafy.meongnyang.api.auth.security.CustomUserDetails;
 import com.ssafy.meongnyang.api.board.dto.request.BoardCreateRequest;
 import com.ssafy.meongnyang.api.board.dto.request.BoardUpdateRequest;
 import com.ssafy.meongnyang.api.board.dto.response.BoardGetResponse;
@@ -11,6 +12,7 @@ import com.ssafy.meongnyang.global.response.ApiResponseDto;
 import com.ssafy.meongnyang.global.response.enums.SuccessCode;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -53,15 +55,18 @@ public class BoardController {
 
     //게시물 수정
     @PatchMapping("/board/{boardId}")
-    public ApiResponseDto updateBoard(@ModelAttribute BoardUpdateRequest boardUpdateRequest, @PathVariable Long boardId){
-        boardServiceImpl.updateBoard(boardUpdateRequest, boardId);
+    public ApiResponseDto updateBoard(@ModelAttribute BoardUpdateRequest boardUpdateRequest,
+                                      @PathVariable Long boardId,
+                                      @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        boardServiceImpl.updateBoard(boardUpdateRequest, boardId, customUserDetails.getUserId());
         return ApiResponseDto.success(SuccessCode.BOARD_UPDATE_SUCCESS);
     }
 
     //게시물 삭제
     @DeleteMapping("/board/{boardId}")
-    public ApiResponseDto deleteBoard(@PathVariable Long boardId) {
-        boardServiceImpl.deleteBoard(boardId);
+    public ApiResponseDto deleteBoard(@PathVariable Long boardId,
+                                      @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        boardServiceImpl.deleteBoard(boardId, customUserDetails.getUserId());
         return ApiResponseDto.success(SuccessCode.BOARD_DELETE_SUCCESS);
     }
 

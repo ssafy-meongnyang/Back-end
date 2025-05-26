@@ -7,7 +7,9 @@ import com.ssafy.meongnyang.api.board.dto.response.BoardGetResponse;
 import com.ssafy.meongnyang.api.board.dto.response.BoardListGetResponse;
 import com.ssafy.meongnyang.api.board.dto.response.PageResponse;
 import com.ssafy.meongnyang.api.board.repository.BoardRepository;
+import com.ssafy.meongnyang.global.exception.CustomException;
 import com.ssafy.meongnyang.global.external.S3Service;
+import com.ssafy.meongnyang.global.response.enums.ErrorCode;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -78,8 +80,11 @@ public class BoardServiceImpl implements BoardService {
         return boardRepository.getBoardById(boardId);
     }
 
-    public void updateBoard(BoardUpdateRequest boardUpdateRequest, Long boardId) {
+    public void updateBoard(BoardUpdateRequest boardUpdateRequest, Long boardId, Long userId) {
         Board board = boardRepository.getBoard(boardId);
+        if(board.getUserId() != userId) {
+            throw new CustomException(ErrorCode.NOT_AUTHOR);
+        }
         board.setCategory(boardUpdateRequest.category());
         board.setTitle(boardUpdateRequest.title());
         board.setContent(boardUpdateRequest.content());
@@ -103,7 +108,10 @@ public class BoardServiceImpl implements BoardService {
         return boardRepository.getBoard(boardId);
     }
 
-    public void deleteBoard(Long boardId) {
+    public void deleteBoard(Long boardId, Long userId) {
+        if(boardRepository.getBoard(boardId).getUserId() != userId){
+            throw new CustomException(ErrorCode.NOT_AUTHOR);
+        }
         boardRepository.deleteBoard(boardId);
     }
 

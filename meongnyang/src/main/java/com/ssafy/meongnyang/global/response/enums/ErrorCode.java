@@ -19,6 +19,10 @@ public enum ErrorCode {
     INVALID_PASSWORD(400,HttpStatus.BAD_REQUEST, "현재 비밀번호가 정확하지 않습니다."),
     USER_NOT_FOUND(400, HttpStatus.BAD_REQUEST, "존재하지 않는 사용자입니다."),
     NOT_FOUND_DIET(400, HttpStatus.BAD_REQUEST,"존재하지 않는 식단입니다."),
+
+    //403 FORBIDDEN
+    NOT_AUTHOR(403, HttpStatus.FORBIDDEN, "해당 게시물에 대한 권한이 없습니다."),
+
     //404 NOT FOUND
     NOT_FOUND_END_POINT(404, HttpStatus.NOT_FOUND, "엔드포인트를 찾을 수 없습니다."),
 
