@@ -82,10 +82,12 @@
     </delete>
 
     <select id="searchBoard" resultType="com.ssafy.meongnyang.api.board.dto.response.BoardListGetResponse">
-        SELECT b.category,
+        SELECT
+        b.id,
+        b.category,
         b.title,
         u.nickname,
-        DATE_FORMAT(b.created_at, '%Y-%m-%d') AS date
+        b.created_at
         FROM board b
         JOIN users u ON b.user_id = u.id
         <where>
@@ -101,4 +103,5 @@
         </where>
         ORDER BY b.created_at DESC
     </select>
+
 </mapper>
