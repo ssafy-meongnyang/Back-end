@@ -57,16 +57,16 @@ public class BoardController {
     @PatchMapping("/board/{boardId}")
     public ApiResponseDto updateBoard(@ModelAttribute BoardUpdateRequest boardUpdateRequest,
                                       @PathVariable Long boardId,
-                                      @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        boardServiceImpl.updateBoard(boardUpdateRequest, boardId, customUserDetails.getUserId());
+                                      @UserId Long userId) {
+        boardServiceImpl.updateBoard(boardUpdateRequest, boardId, userId);
         return ApiResponseDto.success(SuccessCode.BOARD_UPDATE_SUCCESS);
     }
 
     //게시물 삭제
     @DeleteMapping("/board/{boardId}")
     public ApiResponseDto deleteBoard(@PathVariable Long boardId,
-                                      @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        boardServiceImpl.deleteBoard(boardId, customUserDetails.getUserId());
+                                      @UserId Long userId) {
+        boardServiceImpl.deleteBoard(boardId, userId);
         return ApiResponseDto.success(SuccessCode.BOARD_DELETE_SUCCESS);
     }
 
