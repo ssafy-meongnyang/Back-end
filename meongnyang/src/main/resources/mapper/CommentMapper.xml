@@ -15,7 +15,10 @@
     </select>
 
     <select id="getCommentById" resultType="com.ssafy.meongnyang.api.comment.domain.Comment">
-        SELECT * FROM comment
+        SELECT id,
+        board_id AS boardId,
+        user_id AS userId,
+        content FROM comment
         WHERE id = #{commentId};
     </select>
 
