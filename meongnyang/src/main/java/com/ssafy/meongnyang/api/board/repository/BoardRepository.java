@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface BoardRepository {
     void insertBoard(Board board);
-    List<BoardListGetResponse> getBoardListWithUser(@Param("offset") int offset, @Param("size") int size);
+    List<BoardListGetResponse> getBoardListWithUser(@Param("offset") int offset, @Param("size") int size, @Param("category") String category);
     BoardGetResponse getBoardById(Long boardId);
     void updateBoard(Board board);
     Board getBoard(Long boardId);

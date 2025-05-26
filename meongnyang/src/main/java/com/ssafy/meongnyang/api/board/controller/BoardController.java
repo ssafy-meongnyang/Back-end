@@ -39,8 +39,9 @@ public class BoardController {
     //게시물 전체 리스트 조회
     @GetMapping("/board/list")
     public ApiResponseDto getBoardList(@RequestParam(defaultValue = "1") int page,
-                                                                   @RequestParam(defaultValue = "5") int size) {
-        PageResponse<BoardListGetResponse> boardList = boardServiceImpl.getBoardList(page, size);
+                                       @RequestParam(defaultValue = "5") int size,
+                                       @RequestParam String category) {
+        PageResponse<BoardListGetResponse> boardList = boardServiceImpl.getBoardList(page, size, category);
         return ApiResponseDto.success(SuccessCode.BOARD_LIST_GET_SUCCESS, boardList);
     }
 

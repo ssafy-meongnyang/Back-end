@@ -48,9 +48,9 @@ public class BoardServiceImpl implements BoardService {
         }
     }
 
-    public PageResponse<BoardListGetResponse> getBoardList(int page, int size) {
+    public PageResponse<BoardListGetResponse> getBoardList(int page, int size, String category) {
         int offset = (page - 1) * size;
-        List<BoardListGetResponse> boards = boardRepository.getBoardListWithUser(offset, size);
+        List<BoardListGetResponse> boards = boardRepository.getBoardListWithUser(offset, size, category);
         int total = boardRepository.getBoardCount();
 
         return new PageResponse<>(boards, page, size, total);
