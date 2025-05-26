@@ -53,9 +53,23 @@
     <select id="findHealthConcernsByPetId" resultType="string">
         SELECT concern FROM pet_health_concern WHERE pet_id = #{petId}
     </select>
-    <select id="findPetById" resultType="com.ssafy.meongnyang.api.pet.domain.Pet">
+    <!-- 멍냥이 상세정보 가져오기  -->
+    <select id="findPetById" resultMap="PetDetailResultMap">
         SELECT * FROM pet WHERE id = #{petId}
     </select>
+    <resultMap id="PetDetailResultMap" type="com.ssafy.meongnyang.api.pet.domain.Pet">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="breed" column="breed"/>
+        <result property="birthDate" column="birth_date"/>
+        <result property="gender" column="gender"/>
+        <result property="weight" column="weight"/>
+        <result property="shape" column="shape"/>
+        <result property="allergic" column="is_allergic"/>
+        <result property="profileImagePath" column="profile_image_path"/>
+        <result property="representative" column="representative"/>
+        <result property="userId" column="user_id"/>
+    </resultMap>
     <!-- 한마리당 알러지 목록 가져오기   -->
     <select id="findAllergensByPetId" resultType="string">
         SELECT allergen FROM pet_allergen WHERE pet_id = #{petId}
