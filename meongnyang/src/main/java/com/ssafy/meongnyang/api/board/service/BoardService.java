@@ -14,9 +14,9 @@ public interface BoardService {
     PageResponse<BoardListGetResponse> getBoardList(int page, int size, String category);
     int getBoardCount();
     BoardGetResponse getBoardById(Long boardId);
-    void updateBoard(BoardUpdateRequest boardUpdateRequest, Long boardId);
+    void updateBoard(BoardUpdateRequest boardUpdateRequest, Long boardId, Long userId);
     Board getBoard(Long boardId);
-    void deleteBoard(Long boardId);
+    void deleteBoard(Long boardId, Long userId);
     List<BoardListGetResponse> searchBoard(String writer, String title, String content);
 
 }

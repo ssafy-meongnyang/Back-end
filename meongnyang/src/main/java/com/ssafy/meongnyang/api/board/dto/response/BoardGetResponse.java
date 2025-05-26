@@ -8,6 +8,7 @@ public record BoardGetResponse(
         String category,
         String title,
         String nickname,
+        Long userId,
         String profileImageUrl,
         LocalDate date,
         String content,
