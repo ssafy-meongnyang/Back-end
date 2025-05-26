@@ -4,6 +4,7 @@ import com.ssafy.meongnyang.api.board.domain.Board;
 import com.ssafy.meongnyang.api.board.dto.response.BoardGetResponse;
 import com.ssafy.meongnyang.api.board.dto.response.BoardListGetResponse;
 import java.util.List;
+import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -17,4 +18,5 @@ public interface BoardRepository {
     void deleteBoard(Long boardId);
     List<BoardListGetResponse> searchBoard(String writer, String title, String content);
     int getBoardCount();
+    List<Map<String, Object>> getBoardCategoryCount();
 }

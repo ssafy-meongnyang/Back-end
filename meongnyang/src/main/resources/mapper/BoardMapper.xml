@@ -21,6 +21,13 @@
         LIMIT #{size} OFFSET #{offset}
     </select>
 
+    <select id="getBoardCategoryCount" resultType="map">
+        SELECT category, COUNT(*) as count
+        FROM board
+        GROUP BY category
+    </select>
+
+
 
     <select id="getBoardCount" resultType="int">
         SELECT COUNT(*) FROM board
@@ -31,7 +38,7 @@
         b.category,
         b.title,
         u.nickname AS nickname,
-        u.profile_image_url AS profileImageUrl,
+        u.profile_image_path AS profileImageUrl,
         DATE_FORMAT(b.created_at, '%Y-%m-%d') AS date,
         b.content,
         b.image_url

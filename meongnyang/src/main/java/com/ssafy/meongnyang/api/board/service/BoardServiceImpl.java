@@ -9,7 +9,9 @@ import com.ssafy.meongnyang.api.board.dto.response.PageResponse;
 import com.ssafy.meongnyang.api.board.repository.BoardRepository;
 import com.ssafy.meongnyang.global.external.S3Service;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -52,8 +54,20 @@ public class BoardServiceImpl implements BoardService {
         int offset = (page - 1) * size;
         List<BoardListGetResponse> boards = boardRepository.getBoardListWithUser(offset, size, category);
         int total = boardRepository.getBoardCount();
+        List<Map<String, Object>> rawCounts = boardRepository.getBoardCategoryCount();
+        Map<String, Integer> categoryCounts = new HashMap<>();
+        int totalCount = 0;
 
-        return new PageResponse<>(boards, page, size, total);
+        for (Map<String, Object> row : rawCounts) {
+            String cat = (String) row.get("category");
+            int count = ((Number) row.get("count")).intValue();
+            categoryCounts.put(cat, count);
+            totalCount += count;
+        }
+
+        categoryCounts.put("전체", totalCount); // "전체" = 전체 합
+
+        return new PageResponse<>(boards, total, size, total, categoryCounts);
     }
 
     public int getBoardCount() {
