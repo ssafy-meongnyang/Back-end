@@ -82,7 +82,7 @@ public class BoardServiceImpl implements BoardService {
 
     public void updateBoard(BoardUpdateRequest boardUpdateRequest, Long boardId, Long userId) {
         Board board = boardRepository.getBoard(boardId);
-        if(board.getUserId() != userId) {
+        if(!board.getUserId().equals(userId)) {
             throw new CustomException(ErrorCode.NOT_AUTHOR);
         }
         board.setCategory(boardUpdateRequest.category());
@@ -95,8 +95,7 @@ public class BoardServiceImpl implements BoardService {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        } else if (boardUpdateRequest.isDeleted() && boardUpdateRequest.image() == null) {
-            // 이미지가 전달되지 않았을 때 기존 이미지 URL 유지
+        } else if (boardUpdateRequest.isDeleted()) {
             board.setImageUrl(null);
         } else {
             board.setImageUrl(board.getImageUrl());
@@ -109,7 +108,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     public void deleteBoard(Long boardId, Long userId) {
-        if(boardRepository.getBoard(boardId).getUserId() != userId){
+        if(!boardRepository.getBoard(boardId).getUserId().equals(userId)){
             throw new CustomException(ErrorCode.NOT_AUTHOR);
         }
         boardRepository.deleteBoard(boardId);
