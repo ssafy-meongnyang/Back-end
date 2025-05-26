@@ -38,14 +38,16 @@ public class CommentController {
 
     @PatchMapping("/comment/{commentId}")
     public ApiResponseDto updateComment(@RequestBody CommentUpdateRequest commentUpdateRequest,
-                                        @PathVariable Long commentId) {
-        commentServiceImpl.updateComment(commentUpdateRequest, commentId);
+                                        @PathVariable Long commentId,
+                                        @UserId Long userId) {
+        commentServiceImpl.updateComment(commentUpdateRequest, commentId, userId);
         return ApiResponseDto.success(SuccessCode.COMMENT_UPDATE_SUCCESS);
     }
 
     @DeleteMapping("/comment/{commentId}")
-    public ApiResponseDto deleteComment(@PathVariable Long commentId) {
-        commentServiceImpl.deleteComment(commentId);
+    public ApiResponseDto deleteComment(@PathVariable Long commentId,
+                                        @UserId Long userId) {
+        commentServiceImpl.deleteComment(commentId, userId);
         return ApiResponseDto.success(SuccessCode.COMMENT_DELETE_SUCCESS);
     }
 }
