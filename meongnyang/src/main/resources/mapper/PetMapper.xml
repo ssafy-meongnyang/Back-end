@@ -32,12 +32,23 @@
     </insert>
 
     <!--  멍냥이 목록 가져오기 (등록순) -->
-    <select id="findPetsByUserId" resultType="com.ssafy.meongnyang.api.pet.domain.Pet">
+    <select id="findPetsByUserId" resultMap="PetResultMap">
         SELECT * FROM pet
         WHERE user_id = #{userId}
         ORDER BY created_at ASC
     </select>
-
+    <resultMap id="PetResultMap" type="com.ssafy.meongnyang.api.pet.domain.Pet">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="breed" column="breed" />
+        <result property="gender" column="gender" />
+        <result property="birthDate" column="birth_date" />
+        <result property="weight" column="weight" />
+        <result property="profileImagePath" column="profile_image_path" />
+        <result property="representative" column="representative" />
+        <result property="userId" column="user_id" />
+        <result property="createdAt" column="created_at" />
+    </resultMap>
     <!--  한마리당 건강 관심사 목록 가져오기  -->
     <select id="findHealthConcernsByPetId" resultType="string">
         SELECT concern FROM pet_health_concern WHERE pet_id = #{petId}
