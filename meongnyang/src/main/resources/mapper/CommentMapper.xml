@@ -9,7 +9,7 @@
     </insert>
 
     <select id="getComment" resultType="com.ssafy.meongnyang.api.comment.dto.response.CommentGetResponse">
-        SELECT c.id, u.nickname AS username, c.content, c.created_at FROM comment c
+        SELECT c.id, c.user_id AS userId, u.nickname AS username, c.content, c.created_at FROM comment c
         JOIN users u ON c.user_id = u.id
         WHERE c.board_id = #{boardId};
     </select>
