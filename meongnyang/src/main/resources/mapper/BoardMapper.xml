@@ -49,7 +49,14 @@
     </select>
 
     <select id="getBoard" resultType="com.ssafy.meongnyang.api.board.domain.Board">
-        SELECT * FROM board
+        SELECT
+        id,
+        category,
+        user_id AS userId,
+        title,
+        content,
+        image_url AS imageUrl
+        FROM board
         WHERE id = #{boardId}
     </select>
 
@@ -61,6 +68,9 @@
         content = #{content}
         <if test="imageUrl != null">
             , image_url = #{imageUrl}
+        </if>
+        <if test="imageUrl == null">
+            , image_url = null
         </if>
         WHERE id = #{id}
     </update>
