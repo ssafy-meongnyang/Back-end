@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface BoardService {
     void createBoard(BoardCreateRequest boardCreateRequest, Long userId);
-    PageResponse<BoardListGetResponse> getBoardList(int page, int size);
+    PageResponse<BoardListGetResponse> getBoardList(int page, int size, String category);
     int getBoardCount();
     BoardGetResponse getBoardById(Long boardId);
     void updateBoard(BoardUpdateRequest boardUpdateRequest, Long boardId);
