@@ -2,6 +2,7 @@ package com.ssafy.meongnyang.api.auth.controller;
 
 import com.ssafy.meongnyang.api.auth.dto.request.LoginRequest;
 import com.ssafy.meongnyang.api.auth.dto.response.LoginResponse;
+import com.ssafy.meongnyang.api.auth.security.CustomUserDetails;
 import com.ssafy.meongnyang.global.jwt.JwtTokenProvider;
 import com.ssafy.meongnyang.global.response.ApiResponseDto;
 import com.ssafy.meongnyang.global.response.enums.SuccessCode;
@@ -28,12 +29,13 @@ public class AuthController {
                         request.getUsername(), request.getPassword()
                 )
         );
-
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         // 2. 인증에 성공하면 JWT 토큰 생성
         // Role은 ROLE_USER 형식이므로 "ROLE_" 접두사 제거 후 전달
         String token = jwtTokenProvider.createToken(
                 authentication.getName(),           // username
-                authentication.getAuthorities().iterator().next().getAuthority().replace("ROLE_", "") // role
+                authentication.getAuthorities().iterator().next().getAuthority().replace("ROLE_", ""), // role
+                userDetails.getUserId()
         );
 
         // 3. 응답 객체 생성 (accessToken 담은 DTO)
