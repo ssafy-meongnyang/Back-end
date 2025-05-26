@@ -22,7 +22,7 @@
     </select>
 
     <select id="selectUserByUsername" parameterType="String" resultType="com.ssafy.meongnyang.api.user.dto.response.UserResponse">
-        SELECT username, nickname, email, phonenumber, password_updated_at
+        SELECT username, nickname, email, phonenumber, profile_image_path, password_updated_at
         FROM users WHERE username= #{username}
     </select>
 
