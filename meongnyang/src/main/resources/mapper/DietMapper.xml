@@ -28,12 +28,15 @@
         )
 
     </insert>
-    <select id="selectDietListByUserId" resultType="com.ssafy.meongnyang.api.diet.dto.response.DietListResponse">
+    <select id="selectDietListByUserId" resultType="com.ssafy.meongnyang.api.diet.dto.response.DietResponse">
         SELECT
-        user_id,title
+        diet_id, user_id, date, title,
+        breakfast_img_path, breakfast_des,
+        lunch_img_path, lunch_des,
+        dinner_img_path, dinner_des,
+        snack, memo, exercise
         FROM diet
         WHERE user_id = #{userId}
-        ORDER BY created_at ASC
     </select>
     <select id="selectDietDetail" resultType="com.ssafy.meongnyang.api.diet.dto.response.DietResponse">
         SELECT

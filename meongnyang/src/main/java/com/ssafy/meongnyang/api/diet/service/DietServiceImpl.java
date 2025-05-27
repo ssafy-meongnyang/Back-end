@@ -63,7 +63,7 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public List<DietListResponse> getDietList(Long userId) {
+    public List<DietResponse> getDietList(Long userId) {
         return dietRepository.selectDietListByUserId(userId);
     }
 

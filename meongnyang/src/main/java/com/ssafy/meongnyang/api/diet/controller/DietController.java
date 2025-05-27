@@ -34,7 +34,7 @@ public class DietController {
     @GetMapping("/list")
     public ApiResponseDto<?> getDietList(@AuthenticationPrincipal CustomUserDetails userDetails) {
         Long userId = userDetails.getUser().getId();
-        List<DietListResponse> dietList = dietService.getDietList(userId); // DietListResponse로 수정 필요
+        List<DietResponse> dietList = dietService.getDietList(userId);
         return ApiResponseDto.success(SuccessCode.DIET_LIST_GET_SUCCESS,dietList);
     }
 
