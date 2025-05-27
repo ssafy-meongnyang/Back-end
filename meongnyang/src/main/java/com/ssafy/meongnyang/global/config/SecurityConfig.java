@@ -72,7 +72,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(List.of("https://meongnyang.vercel.app"));
+        config.setAllowedOrigins(List.of("https://meongnyang.vercel.app"));
         config.setAllowCredentials(true); // 쿠키 허용 여부
         config.addAllowedHeader("*");     // 요청 헤더 허용
         config.addAllowedMethod("*");     // 요청 메서드 허용
