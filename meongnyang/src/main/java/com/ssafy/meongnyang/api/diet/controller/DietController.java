@@ -47,8 +47,10 @@ public class DietController {
     }
 
     // 식단 수정하기
-    @PostMapping("/{dietId}")
-    public ApiResponseDto<?> updateDiet(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long dietId, @ModelAttribute DietUpdateRequest dietUpdateRequest){
+    @PatchMapping("/{dietId}")
+    public ApiResponseDto<?> updateDiet(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                        @PathVariable Long dietId, @ModelAttribute DietUpdateRequest dietUpdateRequest
+                                        ){
         Long userId = userDetails.getUser().getId();
         dietService.updateDiet(userId,dietId, dietUpdateRequest);
         return ApiResponseDto.success(SuccessCode.DIET_UPDATE_SUCCESS);

@@ -73,7 +73,8 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public void updateDiet(Long userId, Long dietId, DietUpdateRequest dietUpdateRequest) {
+    public void updateDiet(Long userId, Long dietId, DietUpdateRequest dietUpdateRequest
+                           ) {
         try {
 
             // 1. 기존 데이터 조회
@@ -82,18 +83,46 @@ public class DietServiceImpl implements DietService {
                 throw new CustomException(ErrorCode.NOT_FOUND_DIET);
             }
 
-            // 2. 새 이미지가 있으면 업로드, 없으면 기존 경로 유지
-            String breakfastPath = dietUpdateRequest.getBreakfastImg() != null && !dietUpdateRequest.getBreakfastImg().isEmpty()
-                    ? uploadImageToS3(dietUpdateRequest.getBreakfastImg())
-                    : existing.breakfastImg();
+            // 2. delete 플래그가 있으면 null로 저장, 새 이미지가 있으면 업로드, 없으면 기존 경로 유지
+            String breakfastPath = null;
+            if (Boolean.TRUE.equals(dietUpdateRequest.getBreakfastImgDelete())) {
+                breakfastPath = null;
+            } else if (dietUpdateRequest.getBreakfastImg() != null && !dietUpdateRequest.getBreakfastImg().isEmpty()) {
+                breakfastPath = uploadImageToS3(dietUpdateRequest.getBreakfastImg());
+            } else {
+                breakfastPath = existing.breakfastImg(); // 유지
+            }
 
-            String lunchPath = dietUpdateRequest.getLunchImg() != null && !dietUpdateRequest.getLunchImg().isEmpty()
-                    ? uploadImageToS3(dietUpdateRequest.getLunchImg())
-                    : existing.lunchImg();
+            String lunchPath = null;
+            if (Boolean.TRUE.equals(dietUpdateRequest.getLunchImgDelete())) {
+                lunchPath = null;
+            } else if (dietUpdateRequest.getLunchImg() != null && !dietUpdateRequest.getLunchImg().isEmpty()) {
+                lunchPath = uploadImageToS3(dietUpdateRequest.getLunchImg());
+            } else {
+                lunchPath = existing.lunchImg(); // 유지
+            }
 
-            String dinnerPath = dietUpdateRequest.getDinnerImg() != null && !dietUpdateRequest.getDinnerImg().isEmpty()
-                    ? uploadImageToS3(dietUpdateRequest.getDinnerImg())
-                    : existing.dinnerImg();
+            String dinnerPath = null;
+            if (Boolean.TRUE.equals(dietUpdateRequest.getDinnerImgDelete())) {
+                dinnerPath = null;
+            } else if (dietUpdateRequest.getDinnerImg() != null && !dietUpdateRequest.getDinnerImg().isEmpty()) {
+                dinnerPath = uploadImageToS3(dietUpdateRequest.getDinnerImg());
+            } else {
+                dinnerPath = existing.dinnerImg(); // 유지
+            }
+
+
+//            String breakfastPath = dietUpdateRequest.getBreakfastImg() != null && !dietUpdateRequest.getBreakfastImg().isEmpty()
+//                    ? uploadImageToS3(dietUpdateRequest.getBreakfastImg())
+//                    : existing.breakfastImg();
+//
+//            String lunchPath = dietUpdateRequest.getLunchImg() != null && !dietUpdateRequest.getLunchImg().isEmpty()
+//                    ? uploadImageToS3(dietUpdateRequest.getLunchImg())
+//                    : existing.lunchImg();
+//
+//            String dinnerPath = dietUpdateRequest.getDinnerImg() != null && !dietUpdateRequest.getDinnerImg().isEmpty()
+//                    ? uploadImageToS3(dietUpdateRequest.getDinnerImg())
+//                    : existing.dinnerImg();
 
 
             // 3. Diet 객체로 변환
