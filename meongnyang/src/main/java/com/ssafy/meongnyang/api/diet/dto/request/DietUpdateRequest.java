@@ -28,15 +28,15 @@ public class DietUpdateRequest {
     @NotNull
     String title;
     @Nullable
-    MultipartFile breakfastImg;
+    MultipartFile breakfastImgPath;
     @Nullable
     String breakfastDes;
     @Nullable
-    MultipartFile lunchImg;
+    MultipartFile lunchImgPath;
     @Nullable
     String lunchDes;
     @Nullable
-    MultipartFile dinnerImg;
+    MultipartFile dinnerImgPath;
     @Nullable
     String dinnerDes;
     @Nullable
