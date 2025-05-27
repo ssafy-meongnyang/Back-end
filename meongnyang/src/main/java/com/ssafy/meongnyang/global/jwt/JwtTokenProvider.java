@@ -37,11 +37,12 @@ public class JwtTokenProvider {
 
 
     // 토큰 생성 메서드
-    public String createToken(String username, String role, Long userId) {
+    public String createToken(String username, String role, Long userId, String nickname) {
         // JWT Payload에 담을 클레임 설정 (username은 subject로, role은 추가 속성으로)
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("role", role);
-        claims.put("userId", userId); // 사용자 권한 정보 추가
+        claims.put("userId", userId);
+        claims.put("nickname", nickname);// 사용자 권한 정보 추가
 
         Date now = new Date(); // 현재 시간
         Date validity = new Date(now.getTime() + tokenValidityInMilliseconds); // 만료 시간
