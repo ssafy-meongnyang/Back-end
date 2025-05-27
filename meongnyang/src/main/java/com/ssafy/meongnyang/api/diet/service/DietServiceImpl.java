@@ -87,8 +87,8 @@ public class DietServiceImpl implements DietService {
             String breakfastPath = null;
             if (Boolean.TRUE.equals(dietUpdateRequest.getBreakfastImgDelete())) {
                 breakfastPath = null;
-            } else if (dietUpdateRequest.getBreakfastImg() != null && !dietUpdateRequest.getBreakfastImg().isEmpty()) {
-                breakfastPath = uploadImageToS3(dietUpdateRequest.getBreakfastImg());
+            } else if (dietUpdateRequest.getBreakfastImgPath() != null && !dietUpdateRequest.getBreakfastImgPath().isEmpty()) {
+                breakfastPath = uploadImageToS3(dietUpdateRequest.getBreakfastImgPath());
             } else {
                 breakfastPath = existing.breakfastImg(); // 유지
             }
@@ -96,17 +96,18 @@ public class DietServiceImpl implements DietService {
             String lunchPath = null;
             if (Boolean.TRUE.equals(dietUpdateRequest.getLunchImgDelete())) {
                 lunchPath = null;
-            } else if (dietUpdateRequest.getLunchImg() != null && !dietUpdateRequest.getLunchImg().isEmpty()) {
-                lunchPath = uploadImageToS3(dietUpdateRequest.getLunchImg());
+            } else if (dietUpdateRequest.getLunchImgPath() != null && !dietUpdateRequest.getLunchImgPath().isEmpty()) {
+                lunchPath = uploadImageToS3(dietUpdateRequest.getLunchImgPath());
             } else {
                 lunchPath = existing.lunchImg(); // 유지
             }
 
             String dinnerPath = null;
+
             if (Boolean.TRUE.equals(dietUpdateRequest.getDinnerImgDelete())) {
                 dinnerPath = null;
-            } else if (dietUpdateRequest.getDinnerImg() != null && !dietUpdateRequest.getDinnerImg().isEmpty()) {
-                dinnerPath = uploadImageToS3(dietUpdateRequest.getDinnerImg());
+            } else if (dietUpdateRequest.getDinnerImgPath() != null && !dietUpdateRequest.getDinnerImgPath().isEmpty()) {
+                dinnerPath = uploadImageToS3(dietUpdateRequest.getDinnerImgPath());
             } else {
                 dinnerPath = existing.dinnerImg(); // 유지
             }
