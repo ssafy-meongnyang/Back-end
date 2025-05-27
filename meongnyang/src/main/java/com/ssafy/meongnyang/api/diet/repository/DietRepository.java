@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper
 public interface DietRepository {
     void insertDiet(Diet diet);
-    List<DietListResponse> selectDietListByUserId(Long userId);
+    List<DietResponse> selectDietListByUserId(Long userId);
     DietResponse selectDietDetail(@Param("userId") Long userId, @Param("dietId") Long dietId);
     void updateDiet(Diet updated);
     void deleteDiet(@Param("userId") Long userId, @Param("dietId") Long dietId);

@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public interface DietService {
     void createDiet(Long userId, DietRequest dietRequest);
-    List<DietListResponse> getDietList(Long userId);
+    List<DietResponse> getDietList(Long userId);
     DietResponse getDietDetail(Long userId, Long dietId);
     void updateDiet(Long userId, Long dietId, DietUpdateRequest dietUpdateRequest);
     void deleteDiet(Long userId, Long dietId);
