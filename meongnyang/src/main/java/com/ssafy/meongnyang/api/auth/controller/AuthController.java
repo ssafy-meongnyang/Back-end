@@ -35,7 +35,8 @@ public class AuthController {
         String token = jwtTokenProvider.createToken(
                 authentication.getName(),           // username
                 authentication.getAuthorities().iterator().next().getAuthority().replace("ROLE_", ""), // role
-                userDetails.getUserId()
+                userDetails.getUserId(),
+                userDetails.getUser().getNickname()
         );
 
         // 3. 응답 객체 생성 (accessToken 담은 DTO)
