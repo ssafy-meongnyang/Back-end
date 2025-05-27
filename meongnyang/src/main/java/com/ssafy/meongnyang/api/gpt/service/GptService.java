@@ -1,6 +1,5 @@
-package com.ssafy.meongnyang.api.gpt;
+package com.ssafy.meongnyang.api.gpt.service;
 
-import com.ssafy.meongnyang.api.pet.domain.Pet;
 import com.ssafy.meongnyang.api.pet.dto.response.PetListResponse;
 import com.ssafy.meongnyang.api.pet.service.PetServiceImpl;
 import com.ssafy.meongnyang.global.config.GPTConfig;
@@ -23,14 +22,14 @@ public class GptService {
     private final RestTemplate restTemplate;
     private final String apiUrl = "https://api.openai.com/v1/chat/completions";
 
-    public String chat(String prompt, Long userId) {
+    public String chat(String prompt, Long userId, String type) {
         String command = "너는 반려동물의 식단에 대한 정보를 알려주는 반려동물 식단 전문가야. "
                 + "사용자의 요청에 맞게 도움을 주도록 해. "
-                + "그리고 유저가 가진 반려동물 정보를 바탕으로 식단을 맞춤형으로 추천해주는거야.";
+                + "그리고 유저가 가진 반려동물 정보를 참고하면 돼.";
         String petInfo = convertPetListToPromptString(petServiceImpl.getPetListByUserId(userId));
         Map<String, Object> body = new HashMap<>();
         body.put("model", gptConfig.getModel());
-        body.put("messages", List.of(Map.of("role", "user", "content",command + petInfo + prompt)));
+        body.put("messages", List.of(Map.of("role", "user", "content",command + petInfo + type + prompt)));
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
